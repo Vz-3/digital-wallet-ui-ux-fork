@@ -88,7 +88,7 @@ function NRegister({ onLogin }: IRegisterProp) {
         </form>
         <p className={ERegisterStyles.PARAGRAPH}>
           Already have an account?{' '}
-          <Link to="/_login" className={ERegisterStyles.LINK}>
+          <Link to="/login" className={ERegisterStyles.LINK}>
             Login here
           </Link>
         </p>

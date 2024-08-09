@@ -38,7 +38,7 @@ function NLogin({ onLogin }: ILoginProp) {
 
     onLogin(); // to be removed?
     console.log('Login successful ', Date.now());
-    navigate('/_dashboard');
+    navigate('/dashboard');
   };
 
   // if the return statement is not a one-liner, it should be enclosed in parentheses.
@@ -93,7 +93,7 @@ function NLogin({ onLogin }: ILoginProp) {
           </form>
           <p className={ELoginStyles.PARAGRAPH}>
             {fooBarMessage}{' '}
-            <Link to="/_register" className={ELoginStyles.LINK}>
+            <Link to="/register" className={ELoginStyles.LINK}>
               Register here
             </Link>
           </p>

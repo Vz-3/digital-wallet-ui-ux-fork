@@ -49,7 +49,7 @@ function App() {
               isAuthenticated ? (
                 <NDashboard onLogout={handleLogout} />
               ) : (
-                <Navigate to="/_login" />
+                <Navigate to="/login" />
               )
             }
           />
