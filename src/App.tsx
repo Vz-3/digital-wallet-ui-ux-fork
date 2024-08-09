@@ -58,6 +58,24 @@ function App() {
               )
             }
           />
+          <Route
+            path="/_login"
+            element={<NLogin onLogin={handleLogin} />}
+          />
+          <Route
+            path="/_register"
+            element={<NRegister onLogin={handleLogin} />}
+          />
+          <Route
+            path="/_dashboard/*"
+            element={
+              isAuthenticated ? (
+                <NDashboard onLogout={handleLogout} />
+              ) : (
+                <Navigate to="/_login" />
+              )
+            }
+          />
         </Routes>
       </div>
     </Router>
