@@ -20,7 +20,7 @@ function ProfileView() {
     alert('Profile updated successfully!');
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: any) => {
     const { name, value } = e.target;
     setProfile((prevProfile) => ({ ...prevProfile, [name]: value }));
   };
@@ -28,7 +28,9 @@ function ProfileView() {
   return (
     <div className="bg-white shadow overflow-hidden sm:rounded-lg">
       <div className="px-4 py-5 sm:px-6">
-        <h3 className="text-lg leading-6 font-medium text-gray-900">User Profile</h3>
+        <h3 className="text-lg leading-6 font-medium text-gray-900">
+          User Profile
+        </h3>
       </div>
       <div className="border-t border-gray-200">
         <dl>

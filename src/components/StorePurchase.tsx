@@ -1,28 +1,51 @@
 import React, { useState } from 'react';
 import { CreditCard, QrCode, X } from 'lucide-react';
 
+type StoreType = {
+  id: number;
+  name: string;
+  distance: string;
+};
+
+type ItemType = {
+  id: number;
+  name: string;
+  price: number;
+};
+
+enum EScanningMode {
+  STORE = 'store',
+  ITEM = 'item',
+}
+
 const StorePurchase = () => {
-  const [scanningMode, setScanningMode] = useState(null); // 'store' or 'item'
-  const [selectedStore, setSelectedStore] = useState(null);
-  const [cart, setCart] = useState([]);
+  const [scanningMode, setScanningMode] =
+    useState<EScanningMode | null>(null);
+  const [selectedStore, setSelectedStore] =
+    useState<StoreType | null>(null);
+  const [cart, setCart] = useState<ItemType[]>([]);
   const [total, setTotal] = useState(0);
 
   // Simulated database of QR codes
-  const qrCodes = {
+  const qrCodes: Record<string, StoreType | ItemType> = {
     store123: { id: 1, name: 'Grocery Store', distance: '0.5 miles' },
-    store456: { id: 2, name: 'Electronics Shop', distance: '1.2 miles' },
+    store456: {
+      id: 2,
+      name: 'Electronics Shop',
+      distance: '1.2 miles',
+    },
     item789: { id: 1, name: 'Milk', price: 3.99 },
     itemABC: { id: 2, name: 'Bread', price: 2.49 },
   };
 
-  const startScanning = (mode) => {
+  const startScanning = (mode: EScanningMode | null) => {
     setScanningMode(mode);
   };
 
-  const handleScan = (qrCode) => {
+  const handleScan = (qrCode: string) => {
     if (scanningMode === 'store') {
       const store = qrCodes[qrCode];
-      if (store) {
+      if (store && 'distance' in store) {
         setSelectedStore(store);
         setScanningMode(null);
       } else {
@@ -30,7 +53,7 @@ const StorePurchase = () => {
       }
     } else if (scanningMode === 'item') {
       const item = qrCodes[qrCode];
-      if (item) {
+      if (item && 'price' in item) {
         addToCart(item);
         setScanningMode(null);
       } else {
@@ -39,13 +62,13 @@ const StorePurchase = () => {
     }
   };
 
-  const addToCart = (item) => {
+  const addToCart = (item: ItemType) => {
     setCart([...cart, item]);
     setTotal(total + item.price);
   };
 
-  const removeFromCart = (item) => {
-    const newCart = cart.filter(i => i.id !== item.id);
+  const removeFromCart = (item: ItemType) => {
+    const newCart = cart.filter((i) => i.id !== item.id);
     setCart(newCart);
     setTotal(total - item.price);
   };
@@ -60,14 +83,14 @@ const StorePurchase = () => {
   };
 
   // Simulated QR code scanner
-  const QRScanner = ({ onScan }) => (
+  const QRScanner = ({ onScan }: any) => (
     <div className="bg-gray-200 p-4 rounded-lg text-center">
       <p className="mb-2">Scanning QR Code...</p>
-      <input 
-        type="text" 
-        placeholder="Enter QR code" 
+      <input
+        type="text"
+        placeholder="Enter QR code"
         className="p-2 border rounded"
-        onKeyPress={(e) => {
+        onKeyPress={(e: any) => {
           if (e.key === 'Enter') {
             onScan(e.target.value);
             e.target.value = '';
@@ -85,14 +108,16 @@ const StorePurchase = () => {
       {!selectedStore ? (
         <div className="bg-white shadow overflow-hidden sm:rounded-lg">
           <div className="px-4 py-5 sm:px-6">
-            <h3 className="text-lg leading-6 font-medium text-gray-900">Select a Store</h3>
+            <h3 className="text-lg leading-6 font-medium text-gray-900">
+              Select a Store
+            </h3>
           </div>
           <div className="border-t border-gray-200 px-4 py-5 sm:p-6">
             {scanningMode === 'store' ? (
               <QRScanner onScan={handleScan} />
             ) : (
-              <button 
-                onClick={() => startScanning('store')}
+              <button
+                onClick={() => startScanning(EScanningMode.STORE)}
                 className="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
                 <QrCode size={18} className="mr-2" />
@@ -104,18 +129,24 @@ const StorePurchase = () => {
       ) : (
         <div className="bg-white shadow overflow-hidden sm:rounded-lg">
           <div className="px-4 py-5 sm:px-6">
-            <h3 className="text-lg leading-6 font-medium text-gray-900">{selectedStore.name}</h3>
-            <p className="mt-1 max-w-2xl text-sm text-gray-500">{selectedStore.distance}</p>
+            <h3 className="text-lg leading-6 font-medium text-gray-900">
+              {selectedStore.name}
+            </h3>
+            <p className="mt-1 max-w-2xl text-sm text-gray-500">
+              {selectedStore.distance}
+            </p>
           </div>
           <div className="border-t border-gray-200 px-4 py-5 sm:px-6">
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <h4 className="text-md font-medium text-gray-900 mb-2">Scan Items</h4>
+                <h4 className="text-md font-medium text-gray-900 mb-2">
+                  Scan Items
+                </h4>
                 {scanningMode === 'item' ? (
                   <QRScanner onScan={handleScan} />
                 ) : (
-                  <button 
-                    onClick={() => startScanning('item')}
+                  <button
+                    onClick={() => startScanning(EScanningMode.ITEM)}
                     className="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                   >
                     <QrCode size={18} className="mr-2" />
@@ -124,13 +155,17 @@ const StorePurchase = () => {
                 )}
               </div>
               <div>
-                <h4 className="text-md font-medium text-gray-900 mb-2">Your Cart</h4>
+                <h4 className="text-md font-medium text-gray-900 mb-2">
+                  Your Cart
+                </h4>
                 <ul className="divide-y divide-gray-200">
-                  {cart.map(item => (
+                  {cart.map((item) => (
                     <li key={item.id} className="py-2">
                       <div className="flex items-center justify-between">
-                        <p className="text-sm font-medium text-gray-900">{item.name} - ${item.price.toFixed(2)}</p>
-                        <button 
+                        <p className="text-sm font-medium text-gray-900">
+                          {item.name} - ${item.price.toFixed(2)}
+                        </p>
+                        <button
                           onClick={() => removeFromCart(item)}
                           className="inline-flex items-center px-2 py-1 border border-transparent text-xs font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                         >
@@ -141,8 +176,10 @@ const StorePurchase = () => {
                   ))}
                 </ul>
                 <div className="mt-4">
-                  <p className="text-lg font-medium text-gray-900">Total: ${total.toFixed(2)}</p>
-                  <button 
+                  <p className="text-lg font-medium text-gray-900">
+                    Total: ${total.toFixed(2)}
+                  </p>
+                  <button
                     onClick={processPayment}
                     className="mt-2 w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                   >

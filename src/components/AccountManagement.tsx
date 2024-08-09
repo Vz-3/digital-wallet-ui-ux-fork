@@ -1,10 +1,20 @@
 import React, { useState } from 'react';
-import { PlusCircle, CreditCard, Building, Trash2 } from 'lucide-react';
+import {
+  PlusCircle,
+  CreditCard,
+  Building,
+  Trash2,
+} from 'lucide-react';
 
 const AccountManagement = () => {
   const [accounts, setAccounts] = useState([
     { id: 1, type: 'Checking', name: 'Main Checking', balance: 5000 },
-    { id: 2, type: 'Savings', name: 'Emergency Fund', balance: 10000 },
+    {
+      id: 2,
+      type: 'Savings',
+      name: 'Emergency Fund',
+      balance: 10000,
+    },
   ]);
 
   const [linkedBanks, setLinkedBanks] = useState([
@@ -12,91 +22,117 @@ const AccountManagement = () => {
   ]);
 
   const [paymentMethods, setPaymentMethods] = useState([
-    { id: 1, type: 'Credit Card', last4: '5678', expiryDate: '12/24' },
+    {
+      id: 1,
+      type: 'Credit Card',
+      last4: '5678',
+      expiryDate: '12/24',
+    },
   ]);
 
   const [newAccountName, setNewAccountName] = useState('');
   const [newAccountType, setNewAccountType] = useState('Checking');
   const [newBankName, setNewBankName] = useState('');
-  const [newBankAccountNumber, setNewBankAccountNumber] = useState('');
+  const [newBankAccountNumber, setNewBankAccountNumber] =
+    useState('');
   const [newCardNumber, setNewCardNumber] = useState('');
   const [newCardExpiry, setNewCardExpiry] = useState('');
   const [newCardCVV, setNewCardCVV] = useState('');
 
-  const handleAddAccount = (e) => {
+  const handleAddAccount = (e: any) => {
     e.preventDefault();
     if (newAccountName) {
-      setAccounts([...accounts, {
-        id: accounts.length + 1,
-        type: newAccountType,
-        name: newAccountName,
-        balance: 0
-      }]);
+      setAccounts([
+        ...accounts,
+        {
+          id: accounts.length + 1,
+          type: newAccountType,
+          name: newAccountName,
+          balance: 0,
+        },
+      ]);
       setNewAccountName('');
       setNewAccountType('Checking');
     }
   };
 
-  const handleLinkBank = (e) => {
+  const handleLinkBank = (e: any) => {
     e.preventDefault();
     if (newBankName && newBankAccountNumber) {
-      setLinkedBanks([...linkedBanks, {
-        id: linkedBanks.length + 1,
-        name: newBankName,
-        accountNumber: `****${newBankAccountNumber.slice(-4)}`
-      }]);
+      setLinkedBanks([
+        ...linkedBanks,
+        {
+          id: linkedBanks.length + 1,
+          name: newBankName,
+          accountNumber: `****${newBankAccountNumber.slice(-4)}`,
+        },
+      ]);
       setNewBankName('');
       setNewBankAccountNumber('');
     }
   };
 
-  const handleAddPaymentMethod = (e) => {
+  const handleAddPaymentMethod = (e: any) => {
     e.preventDefault();
     if (newCardNumber && newCardExpiry && newCardCVV) {
-      setPaymentMethods([...paymentMethods, {
-        id: paymentMethods.length + 1,
-        type: 'Credit Card',
-        last4: newCardNumber.slice(-4),
-        expiryDate: newCardExpiry
-      }]);
+      setPaymentMethods([
+        ...paymentMethods,
+        {
+          id: paymentMethods.length + 1,
+          type: 'Credit Card',
+          last4: newCardNumber.slice(-4),
+          expiryDate: newCardExpiry,
+        },
+      ]);
       setNewCardNumber('');
       setNewCardExpiry('');
       setNewCardCVV('');
     }
   };
 
-  const handleRemoveAccount = (id) => {
-    setAccounts(accounts.filter(account => account.id !== id));
+  const handleRemoveAccount = (id: number) => {
+    setAccounts(accounts.filter((account) => account.id !== id));
   };
 
-  const handleRemoveBank = (id) => {
-    setLinkedBanks(linkedBanks.filter(bank => bank.id !== id));
+  const handleRemoveBank = (id: number) => {
+    setLinkedBanks(linkedBanks.filter((bank) => bank.id !== id));
   };
 
-  const handleRemovePaymentMethod = (id) => {
-    setPaymentMethods(paymentMethods.filter(method => method.id !== id));
+  const handleRemovePaymentMethod = (id: number) => {
+    setPaymentMethods(
+      paymentMethods.filter((method) => method.id !== id)
+    );
   };
 
   return (
     <div className="space-y-6">
       <div className="bg-white shadow overflow-hidden sm:rounded-lg">
         <div className="px-4 py-5 sm:px-6">
-          <h3 className="text-lg leading-6 font-medium text-gray-900">Your Accounts</h3>
+          <h3 className="text-lg leading-6 font-medium text-gray-900">
+            Your Accounts
+          </h3>
         </div>
         <div className="border-t border-gray-200">
           <ul className="divide-y divide-gray-200">
-            {accounts.map(account => (
+            {accounts.map((account) => (
               <li key={account.id} className="px-4 py-4 sm:px-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-indigo-600 truncate">{account.name}</p>
-                    <p className="text-sm text-gray-500">{account.type}</p>
+                    <p className="text-sm font-medium text-indigo-600 truncate">
+                      {account.name}
+                    </p>
+                    <p className="text-sm text-gray-500">
+                      {account.type}
+                    </p>
                   </div>
                   <div className="flex items-center">
                     <p className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                       ${account.balance.toFixed(2)}
                     </p>
-                    <button onClick={() => handleRemoveAccount(account.id)} className="ml-2 text-red-600 hover:text-red-900">
+                    <button
+                      onClick={() => handleRemoveAccount(account.id)}
+                      className="ml-2 text-red-600 hover:text-red-900"
+                    >
                       <Trash2 size={18} />
                     </button>
                   </div>
@@ -106,7 +142,10 @@ const AccountManagement = () => {
           </ul>
         </div>
         <div className="px-4 py-4 sm:px-6">
-          <form onSubmit={handleAddAccount} className="flex items-center space-x-2">
+          <form
+            onSubmit={handleAddAccount}
+            className="flex items-center space-x-2"
+          >
             <input
               type="text"
               value={newAccountName}
@@ -122,7 +161,10 @@ const AccountManagement = () => {
               <option value="Checking">Checking</option>
               <option value="Savings">Savings</option>
             </select>
-            <button type="submit" className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <button
+              type="submit"
+              className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
               <PlusCircle size={18} className="mr-2" />
               Add Account
             </button>
@@ -132,18 +174,27 @@ const AccountManagement = () => {
 
       <div className="bg-white shadow overflow-hidden sm:rounded-lg">
         <div className="px-4 py-5 sm:px-6">
-          <h3 className="text-lg leading-6 font-medium text-gray-900">Linked Bank Accounts</h3>
+          <h3 className="text-lg leading-6 font-medium text-gray-900">
+            Linked Bank Accounts
+          </h3>
         </div>
         <div className="border-t border-gray-200">
           <ul className="divide-y divide-gray-200">
-            {linkedBanks.map(bank => (
+            {linkedBanks.map((bank) => (
               <li key={bank.id} className="px-4 py-4 sm:px-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-indigo-600 truncate">{bank.name}</p>
-                    <p className="text-sm text-gray-500">Account: {bank.accountNumber}</p>
+                    <p className="text-sm font-medium text-indigo-600 truncate">
+                      {bank.name}
+                    </p>
+                    <p className="text-sm text-gray-500">
+                      Account: {bank.accountNumber}
+                    </p>
                   </div>
-                  <button onClick={() => handleRemoveBank(bank.id)} className="text-red-600 hover:text-red-900">
+                  <button
+                    onClick={() => handleRemoveBank(bank.id)}
+                    className="text-red-600 hover:text-red-900"
+                  >
                     <Trash2 size={18} />
                   </button>
                 </div>
@@ -152,7 +203,10 @@ const AccountManagement = () => {
           </ul>
         </div>
         <div className="px-4 py-4 sm:px-6">
-          <form onSubmit={handleLinkBank} className="flex items-center space-x-2">
+          <form
+            onSubmit={handleLinkBank}
+            className="flex items-center space-x-2"
+          >
             <input
               type="text"
               value={newBankName}
@@ -163,11 +217,16 @@ const AccountManagement = () => {
             <input
               type="text"
               value={newBankAccountNumber}
-              onChange={(e) => setNewBankAccountNumber(e.target.value)}
+              onChange={(e) =>
+                setNewBankAccountNumber(e.target.value)
+              }
               placeholder="Account Number"
               className="flex-grow shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md"
             />
-            <button type="submit" className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <button
+              type="submit"
+              className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
               <Building size={18} className="mr-2" />
               Link Bank
             </button>
@@ -177,18 +236,29 @@ const AccountManagement = () => {
 
       <div className="bg-white shadow overflow-hidden sm:rounded-lg">
         <div className="px-4 py-5 sm:px-6">
-          <h3 className="text-lg leading-6 font-medium text-gray-900">Payment Methods</h3>
+          <h3 className="text-lg leading-6 font-medium text-gray-900">
+            Payment Methods
+          </h3>
         </div>
         <div className="border-t border-gray-200">
           <ul className="divide-y divide-gray-200">
-            {paymentMethods.map(method => (
+            {paymentMethods.map((method) => (
               <li key={method.id} className="px-4 py-4 sm:px-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-indigo-600 truncate">{method.type} ending in {method.last4}</p>
-                    <p className="text-sm text-gray-500">Expires: {method.expiryDate}</p>
+                    <p className="text-sm font-medium text-indigo-600 truncate">
+                      {method.type} ending in {method.last4}
+                    </p>
+                    <p className="text-sm text-gray-500">
+                      Expires: {method.expiryDate}
+                    </p>
                   </div>
-                  <button onClick={() => handleRemovePaymentMethod(method.id)} className="text-red-600 hover:text-red-900">
+                  <button
+                    onClick={() =>
+                      handleRemovePaymentMethod(method.id)
+                    }
+                    className="text-red-600 hover:text-red-900"
+                  >
                     <Trash2 size={18} />
                   </button>
                 </div>
@@ -197,7 +267,10 @@ const AccountManagement = () => {
           </ul>
         </div>
         <div className="px-4 py-4 sm:px-6">
-          <form onSubmit={handleAddPaymentMethod} className="space-y-2">
+          <form
+            onSubmit={handleAddPaymentMethod}
+            className="space-y-2"
+          >
             <input
               type="text"
               value={newCardNumber}
@@ -221,7 +294,10 @@ const AccountManagement = () => {
                 className="flex-grow shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md"
               />
             </div>
-            <button type="submit" className="w-full inline-flex items-center justify-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <button
+              type="submit"
+              className="w-full inline-flex items-center justify-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
               <CreditCard size={18} className="mr-2" />
               Add Payment Method
             </button>
