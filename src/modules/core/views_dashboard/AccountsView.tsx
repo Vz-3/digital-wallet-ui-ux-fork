@@ -3,12 +3,22 @@ import { PlusCircle } from 'lucide-react';
 
 function AccountsView() {
   const [accounts, setAccounts] = useState([
-    { id: 1, name: 'Checking Account', balance: 2500, number: '****1234' },
-    { id: 2, name: 'Savings Account', balance: 10000, number: '****5678' },
+    {
+      id: 1,
+      name: 'Checking Account',
+      balance: 2500,
+      number: '****1234',
+    },
+    {
+      id: 2,
+      name: 'Savings Account',
+      balance: 10000,
+      number: '****5678',
+    },
   ]);
 
   const handleAddAccount = () => {
-    const name = prompt("Enter account name:");
+    const name = prompt('Enter account name:');
     if (name) {
       const newAccount = {
         id: accounts.length + 1,
@@ -23,11 +33,20 @@ function AccountsView() {
   return (
     <div className="space-y-6">
       {accounts.map((account) => (
-        <div key={account.id} className="bg-white overflow-hidden shadow rounded-lg">
+        <div
+          key={account.id}
+          className="bg-white overflow-hidden shadow rounded-lg"
+        >
           <div className="px-4 py-5 sm:p-6">
-            <h3 className="text-lg font-medium text-gray-900">{account.name}</h3>
-            <p className="mt-1 text-3xl font-semibold text-gray-900">${account.balance.toFixed(2)}</p>
-            <p className="mt-1 text-sm text-gray-500">Account number: {account.number}</p>
+            <h3 className="text-lg font-medium text-gray-900">
+              {account.name}
+            </h3>
+            <p className="mt-1 text-3xl font-semibold text-gray-900">
+              ${account.balance.toFixed(2)}
+            </p>
+            <p className="mt-1 text-sm text-gray-500">
+              Account number: {account.number}
+            </p>
           </div>
         </div>
       ))}
@@ -43,3 +62,4 @@ function AccountsView() {
 }
 
 export default AccountsView;
+// Currently unused
