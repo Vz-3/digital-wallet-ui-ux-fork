@@ -1,23 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FormEvent } from 'react';
-
+import { ECoreStyles } from '../styles/styleIndex';
 // can be placed on a shared/commons folder.
 interface ILoginProp {
   onLogin: () => void;
-}
-
-// same with this.
-enum ELoginStyles {
-  CONTAINER = 'min-h-screen flex items-center justify-center bg-gray-100',
-  FORM_CONTAINER = 'bg-white p-8 rounded shadow-md w-96',
-  TITLE = 'text-2xl font-bold mb-4',
-  FORM = 'space-y-4',
-  LABEL = 'block text-sm font-medium text-gray-700',
-  INPUT = 'mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2',
-  BUTTON = 'w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-200',
-  LINK = 'text-blue-600 hover:underline',
-  PARAGRAPH = 'mt-4 text-center',
 }
 
 function NLogin({ onLogin }: ILoginProp) {
@@ -44,17 +31,17 @@ function NLogin({ onLogin }: ILoginProp) {
   // if the return statement is not a one-liner, it should be enclosed in parentheses.
   return (
     <>
-      <div className={ELoginStyles.CONTAINER}>
-        <div className={ELoginStyles.FORM_CONTAINER}>
-          <h2 className={ELoginStyles.TITLE}> Login to Cgash</h2>
+      <div className={ECoreStyles.CONTAINER}>
+        <div className={ECoreStyles.FORM_CONTAINER}>
+          <h2 className={ECoreStyles.TITLE}> Login to Cgash</h2>
           <form
             onSubmit={handleLoginSubmit}
-            className={ELoginStyles.FORM}
+            className={ECoreStyles.FORM}
           >
             <div>
               <label
                 htmlFor="loginEmail"
-                className={ELoginStyles.LABEL}
+                className={ECoreStyles.LABEL}
               >
                 Email
               </label>
@@ -65,14 +52,14 @@ function NLogin({ onLogin }: ILoginProp) {
                 onChange={(inputText) =>
                   setEmail(inputText.target.value)
                 }
-                className={ELoginStyles.INPUT}
+                className={ECoreStyles.INPUT}
                 required
               />
             </div>
             <div>
               <label
                 htmlFor="loginPassword"
-                className={ELoginStyles.LABEL}
+                className={ECoreStyles.LABEL}
               >
                 Password
               </label>
@@ -83,17 +70,17 @@ function NLogin({ onLogin }: ILoginProp) {
                 onChange={(inputText) =>
                   setPassword(inputText.target.value)
                 }
-                className={ELoginStyles.INPUT}
+                className={ECoreStyles.INPUT}
                 required
               />
             </div>
-            <button type="submit" className={ELoginStyles.BUTTON}>
+            <button type="submit" className={ECoreStyles.BUTTON}>
               Log In
             </button>
           </form>
-          <p className={ELoginStyles.PARAGRAPH}>
+          <p className={ECoreStyles.PARAGRAPH}>
             {fooBarMessage}{' '}
-            <Link to="/register" className={ELoginStyles.LINK}>
+            <Link to="/register" className={ECoreStyles.LINK}>
               Register here
             </Link>
           </p>

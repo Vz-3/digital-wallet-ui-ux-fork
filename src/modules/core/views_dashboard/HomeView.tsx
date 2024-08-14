@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowUpRight, ArrowDownLeft, Wallet } from 'lucide-react';
 import BigNumber from 'bignumber.js';
+import { EHomeViewStyles } from '../styles/styleIndex';
 
 function HomeView() {
   // Oddly enough, there are currencies that have 3 decimal places. Also currencies like JPY with no decimal places.
@@ -53,38 +54,40 @@ function HomeView() {
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <div className="bg-white overflow-hidden shadow rounded-lg">
-        <div className="px-4 py-5 sm:p-6">
-          <h3 className="text-lg font-medium text-gray-900 mb-4">
+    <div className={EHomeViewStyles.CONTAINER}>
+      <div className={EHomeViewStyles.CARD}>
+        <div className={EHomeViewStyles.CARD_HEADER}>
+          <h3 className={EHomeViewStyles.CARD_TITLE}>
             Total Balance
           </h3>
-          <p className="text-3xl font-bold">${balance.toFixed(3)}</p>
+          <p className={EHomeViewStyles.BALANCE}>
+            ${balance.toFixed(3)}
+          </p>
         </div>
       </div>
-      <div className="bg-white overflow-hidden shadow rounded-lg">
-        <div className="px-4 py-5 sm:p-6">
-          <h3 className="text-lg font-medium text-gray-900 mb-4">
+      <div className={EHomeViewStyles.CARD}>
+        <div className={EHomeViewStyles.CARD_HEADER}>
+          <h3 className={EHomeViewStyles.CARD_TITLE}>
             Quick Actions
           </h3>
-          <div className="space-y-2">
+          <div className={EHomeViewStyles.ACTIONS_CONTAINER}>
             <button
               onClick={handleSendMoney}
-              className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-200 flex items-center justify-center"
+              className={EHomeViewStyles.BUTTON}
             >
               <ArrowUpRight className="mr-2" size={18} />
               Send Money
             </button>
             <button
               onClick={handleRequestMoney}
-              className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-200 flex items-center justify-center"
+              className={EHomeViewStyles.BUTTON}
             >
               <ArrowDownLeft className="mr-2" size={18} />
               Request Money
             </button>
             <button
               onClick={handleAddFunds}
-              className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-200 flex items-center justify-center"
+              className={EHomeViewStyles.BUTTON}
             >
               <Wallet className="mr-2" size={18} />
               Add Funds

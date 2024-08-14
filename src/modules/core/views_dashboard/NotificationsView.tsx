@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Bell, DollarSign, CreditCard } from 'lucide-react';
+import { ENotificationsViewStyles } from '../styles/styleIndex';
 
 type NotificationType = {
   id: number;
@@ -11,7 +12,6 @@ type NotificationType = {
 type ENotificationType = 'alert' | 'transaction' | 'card';
 
 function NotificationsView() {
-  // removed setNotification since it's unused for the time being.
   const [notifications] = useState<NotificationType[]>([
     {
       id: 1,
@@ -47,20 +47,20 @@ function NotificationsView() {
   };
 
   return (
-    <div className="space-y-4">
+    <div className={ENotificationsViewStyles.CONTAINER}>
       {notifications.map((notification) => (
         <div
           key={notification.id}
-          className="bg-white shadow overflow-hidden sm:rounded-lg p-4 flex items-start"
+          className={ENotificationsViewStyles.NOTIFICATION}
         >
-          <div className="flex-shrink-0 mr-4">
+          <div className={ENotificationsViewStyles.ICON_CONTAINER}>
             {getIcon(notification.type)}
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-gray-900">
+            <p className={ENotificationsViewStyles.MESSAGE}>
               {notification.message}
             </p>
-            <p className="text-sm text-gray-500">
+            <p className={ENotificationsViewStyles.TIME}>
               {notification.time}
             </p>
           </div>

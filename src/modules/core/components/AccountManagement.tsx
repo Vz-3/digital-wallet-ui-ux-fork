@@ -6,6 +6,7 @@ import {
   Trash2,
 } from 'lucide-react';
 import BigNumber from 'bignumber.js';
+import { EAccountManagementStyles } from '../styles/styleIndex';
 
 type AccountType = {
   id: number;
@@ -23,13 +24,11 @@ type BankType = {
 type PaymentMethodType = {
   id: number;
   type: string;
-  last4: string; //change to number?
-  expiryDate: string; // change to date?
+  last4: string;
+  expiryDate: string;
 };
 
 const AccountManagement = () => {
-  // convert to function?
-
   const currencyNumber = BigNumber.clone({ DECIMAL_PLACES: 3 });
 
   const [accounts, setAccounts] = useState<AccountType[]>([
@@ -72,7 +71,6 @@ const AccountManagement = () => {
   const [newCardCVV, setNewCardCVV] = useState('');
 
   const handleAddAccount = (event: FormEvent<HTMLFormElement>) => {
-    //hardcoded
     event.preventDefault();
     if (newAccountName) {
       setAccounts([
@@ -84,13 +82,12 @@ const AccountManagement = () => {
           balance: BigNumber(0),
         },
       ]);
-      setNewAccountName(''); // #1 create a function to reset inputs
+      setNewAccountName('');
       setNewAccountType('Checking');
     }
   };
 
   const handleLinkBank = (event: FormEvent<HTMLFormElement>) => {
-    //hardcoded
     event.preventDefault();
     if (newBankName && newBankAccountNumber) {
       setLinkedBanks([
@@ -101,7 +98,7 @@ const AccountManagement = () => {
           accountNumber: `****${newBankAccountNumber.slice(-4)}`,
         },
       ]);
-      setNewBankName(''); // ditto #1
+      setNewBankName('');
       setNewBankAccountNumber('');
     }
   };
@@ -120,7 +117,7 @@ const AccountManagement = () => {
           expiryDate: newCardExpiry,
         },
       ]);
-      setNewCardNumber(''); //ditto #1
+      setNewCardNumber('');
       setNewCardExpiry('');
       setNewCardCVV('');
     }
@@ -141,33 +138,48 @@ const AccountManagement = () => {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="bg-white shadow overflow-hidden sm:rounded-lg">
-        <div className="px-4 py-5 sm:px-6">
-          <h3 className="text-lg leading-6 font-medium text-gray-900">
+    <div className={EAccountManagementStyles.CONTAINER}>
+      <div className={EAccountManagementStyles.SECTION}>
+        <div className={EAccountManagementStyles.SECTION_HEADER}>
+          <h3 className={EAccountManagementStyles.SECTION_TITLE}>
             Your Accounts
           </h3>
         </div>
-        <div className="border-t border-gray-200">
-          <ul className="divide-y divide-gray-200">
+        <div className={EAccountManagementStyles.LIST}>
+          <ul className={EAccountManagementStyles.LIST_ITEM}>
             {accounts.map((account) => (
-              <li key={account.id} className="px-4 py-4 sm:px-6">
-                <div className="flex items-center justify-between">
+              <li
+                key={account.id}
+                className={EAccountManagementStyles.ITEM}
+              >
+                <div
+                  className={EAccountManagementStyles.ITEM_CONTENT}
+                >
                   <div>
-                    <p className="text-sm font-medium text-indigo-600 truncate">
+                    <p className={EAccountManagementStyles.ITEM_TEXT}>
                       {account.name}
                     </p>
-                    <p className="text-sm text-gray-500">
+                    <p
+                      className={
+                        EAccountManagementStyles.ITEM_SUBTEXT
+                      }
+                    >
                       {account.type}
                     </p>
                   </div>
                   <div className="flex items-center">
-                    <p className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                    <p
+                      className={
+                        EAccountManagementStyles.ITEM_BALANCE
+                      }
+                    >
                       ${account.balance.toFixed(3)}
                     </p>
                     <button
                       onClick={() => handleRemoveAccount(account.id)}
-                      className="ml-2 text-red-600 hover:text-red-900"
+                      className={
+                        EAccountManagementStyles.DELETE_BUTTON
+                      }
                     >
                       <Trash2 size={18} />
                     </button>
@@ -177,29 +189,29 @@ const AccountManagement = () => {
             ))}
           </ul>
         </div>
-        <div className="px-4 py-4 sm:px-6">
+        <div className={EAccountManagementStyles.SECTION_HEADER}>
           <form
             onSubmit={handleAddAccount}
-            className="flex items-center space-x-2"
+            className={EAccountManagementStyles.FORM}
           >
             <input
               type="text"
               value={newAccountName}
               onChange={(e) => setNewAccountName(e.target.value)}
               placeholder="Account Name"
-              className="flex-grow shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md"
+              className={EAccountManagementStyles.FORM_INPUT}
             />
             <select
               value={newAccountType}
               onChange={(e) => setNewAccountType(e.target.value)}
-              className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md"
+              className={EAccountManagementStyles.FORM_SELECT}
             >
               <option value="Checking">Checking</option>
               <option value="Savings">Savings</option>
             </select>
             <button
               type="submit"
-              className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className={EAccountManagementStyles.BUTTON}
             >
               <PlusCircle size={18} className="mr-2" />
               Add Account
@@ -208,28 +220,37 @@ const AccountManagement = () => {
         </div>
       </div>
 
-      <div className="bg-white shadow overflow-hidden sm:rounded-lg">
-        <div className="px-4 py-5 sm:px-6">
-          <h3 className="text-lg leading-6 font-medium text-gray-900">
+      <div className={EAccountManagementStyles.SECTION}>
+        <div className={EAccountManagementStyles.SECTION_HEADER}>
+          <h3 className={EAccountManagementStyles.SECTION_TITLE}>
             Linked Bank Accounts
           </h3>
         </div>
-        <div className="border-t border-gray-200">
-          <ul className="divide-y divide-gray-200">
+        <div className={EAccountManagementStyles.LIST}>
+          <ul className={EAccountManagementStyles.LIST_ITEM}>
             {linkedBanks.map((bank) => (
-              <li key={bank.id} className="px-4 py-4 sm:px-6">
-                <div className="flex items-center justify-between">
+              <li
+                key={bank.id}
+                className={EAccountManagementStyles.ITEM}
+              >
+                <div
+                  className={EAccountManagementStyles.ITEM_CONTENT}
+                >
                   <div>
-                    <p className="text-sm font-medium text-indigo-600 truncate">
+                    <p className={EAccountManagementStyles.ITEM_TEXT}>
                       {bank.name}
                     </p>
-                    <p className="text-sm text-gray-500">
+                    <p
+                      className={
+                        EAccountManagementStyles.ITEM_SUBTEXT
+                      }
+                    >
                       Account: {bank.accountNumber}
                     </p>
                   </div>
                   <button
                     onClick={() => handleRemoveBank(bank.id)}
-                    className="text-red-600 hover:text-red-900"
+                    className={EAccountManagementStyles.DELETE_BUTTON}
                   >
                     <Trash2 size={18} />
                   </button>
@@ -238,17 +259,17 @@ const AccountManagement = () => {
             ))}
           </ul>
         </div>
-        <div className="px-4 py-4 sm:px-6">
+        <div className={EAccountManagementStyles.SECTION_HEADER}>
           <form
             onSubmit={handleLinkBank}
-            className="flex items-center space-x-2"
+            className={EAccountManagementStyles.FORM}
           >
             <input
               type="text"
               value={newBankName}
               onChange={(e) => setNewBankName(e.target.value)}
               placeholder="Bank Name"
-              className="flex-grow shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md"
+              className={EAccountManagementStyles.FORM_INPUT}
             />
             <input
               type="text"
@@ -257,11 +278,11 @@ const AccountManagement = () => {
                 setNewBankAccountNumber(e.target.value)
               }
               placeholder="Account Number"
-              className="flex-grow shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md"
+              className={EAccountManagementStyles.FORM_INPUT}
             />
             <button
               type="submit"
-              className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className={EAccountManagementStyles.BUTTON}
             >
               <Building size={18} className="mr-2" />
               Link Bank
@@ -270,22 +291,31 @@ const AccountManagement = () => {
         </div>
       </div>
 
-      <div className="bg-white shadow overflow-hidden sm:rounded-lg">
-        <div className="px-4 py-5 sm:px-6">
-          <h3 className="text-lg leading-6 font-medium text-gray-900">
+      <div className={EAccountManagementStyles.SECTION}>
+        <div className={EAccountManagementStyles.SECTION_HEADER}>
+          <h3 className={EAccountManagementStyles.SECTION_TITLE}>
             Payment Methods
           </h3>
         </div>
-        <div className="border-t border-gray-200">
-          <ul className="divide-y divide-gray-200">
+        <div className={EAccountManagementStyles.LIST}>
+          <ul className={EAccountManagementStyles.LIST_ITEM}>
             {paymentMethods.map((method) => (
-              <li key={method.id} className="px-4 py-4 sm:px-6">
-                <div className="flex items-center justify-between">
+              <li
+                key={method.id}
+                className={EAccountManagementStyles.ITEM}
+              >
+                <div
+                  className={EAccountManagementStyles.ITEM_CONTENT}
+                >
                   <div>
-                    <p className="text-sm font-medium text-indigo-600 truncate">
+                    <p className={EAccountManagementStyles.ITEM_TEXT}>
                       {method.type} ending in {method.last4}
                     </p>
-                    <p className="text-sm text-gray-500">
+                    <p
+                      className={
+                        EAccountManagementStyles.ITEM_SUBTEXT
+                      }
+                    >
                       Expires: {method.expiryDate}
                     </p>
                   </div>
@@ -293,7 +323,7 @@ const AccountManagement = () => {
                     onClick={() =>
                       handleRemovePaymentMethod(method.id)
                     }
-                    className="text-red-600 hover:text-red-900"
+                    className={EAccountManagementStyles.DELETE_BUTTON}
                   >
                     <Trash2 size={18} />
                   </button>
@@ -302,7 +332,7 @@ const AccountManagement = () => {
             ))}
           </ul>
         </div>
-        <div className="px-4 py-4 sm:px-6">
+        <div className={EAccountManagementStyles.SECTION_HEADER}>
           <form
             onSubmit={handleAddPaymentMethod}
             className="space-y-2"
@@ -312,27 +342,29 @@ const AccountManagement = () => {
               value={newCardNumber}
               onChange={(e) => setNewCardNumber(e.target.value)}
               placeholder="Card Number"
-              className="w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md"
+              className={EAccountManagementStyles.FORM_INPUT_LARGE}
             />
-            <div className="flex space-x-2">
+            <div
+              className={EAccountManagementStyles.FORM_INPUT_GROUP}
+            >
               <input
                 type="text"
                 value={newCardExpiry}
                 onChange={(e) => setNewCardExpiry(e.target.value)}
                 placeholder="MM/YY"
-                className="flex-grow shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md"
+                className={EAccountManagementStyles.FORM_INPUT}
               />
               <input
                 type="text"
                 value={newCardCVV}
                 onChange={(e) => setNewCardCVV(e.target.value)}
                 placeholder="CVV"
-                className="flex-grow shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md"
+                className={EAccountManagementStyles.FORM_INPUT}
               />
             </div>
             <button
               type="submit"
-              className="w-full inline-flex items-center justify-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className={EAccountManagementStyles.FORM_BUTTON}
             >
               <CreditCard size={18} className="mr-2" />
               Add Payment Method

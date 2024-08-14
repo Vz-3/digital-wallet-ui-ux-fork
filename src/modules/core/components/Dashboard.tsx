@@ -17,6 +17,7 @@ import ProfileView from '../views_dashboard/ProfileView';
 import SettingsView from '../views_dashboard/SettingsView';
 import AccountManagement from './AccountManagement';
 import StorePurchase from './StorePurchase';
+import { EDashboardStyles } from '../styles/styleIndex';
 
 interface IDashboardProps {
   onLogout: () => void;
@@ -56,20 +57,20 @@ function NDashboard({ onLogout }: IDashboardProps) {
   };
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className={EDashboardStyles.MAIN_CONTAINER}>
       {/* Sidebar */}
-      <div className="w-64 bg-white shadow-md">
+      <div className={EDashboardStyles.SIDEBAR}>
         <div className="p-4">
-          <h1 className="text-2xl font-bold text-blue-600">Cgash</h1>
+          <h1 className={EDashboardStyles.APP_HEADER}>Cgash</h1>
         </div>
         <nav className="mt-6">
           {sidebarLinks.map((link) => (
             <button
               key={link.key}
-              className={`flex items-center w-full py-2 px-4 ${
+              className={`${EDashboardStyles.SIDEBAR_NAV_ITEM} ${
                 activeView === link.key
-                  ? 'bg-blue-100 text-blue-600'
-                  : 'text-gray-600 hover:bg-gray-100'
+                  ? EDashboardStyles.SIDEBAR_NAV_ITEM_ACTIVE
+                  : EDashboardStyles.SIDEBAR_NAV_ITEM_INACTIVE
               }`}
               onClick={() => handleViewChange(link.key)}
             >
@@ -81,9 +82,9 @@ function NDashboard({ onLogout }: IDashboardProps) {
             </button>
           ))}
         </nav>
-        <div className="absolute bottom-0 w-64 p-4">
+        <div className={EDashboardStyles.SIDEBAR_FOOTER}>
           <button
-            className="flex items-center text-gray-600 hover:text-red-500"
+            className={EDashboardStyles.LOGOUT_BUTTON}
             onClick={onLogout}
           >
             <LogOut className="mr-2" size={18} />
@@ -94,15 +95,15 @@ function NDashboard({ onLogout }: IDashboardProps) {
 
       {/* Main Content */}
       <div className="flex-1 overflow-y-auto">
-        <header className="bg-white shadow-sm">
-          <div className="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
-            <h1 className="text-2xl font-semibold text-gray-900">
+        <header className={EDashboardStyles.MAIN_HEADER}>
+          <div className={EDashboardStyles.MAIN_HEADER_TITLE}>
+            <h1 className={EDashboardStyles.MAIN_ACTIVE_HEADER}>
               {activeView.charAt(0).toUpperCase() +
                 activeView.slice(1)}
             </h1>
           </div>
         </header>
-        <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <main className={EDashboardStyles.MAIN_CONTENT_WRAPPER}>
           <Routes>
             <Route path="/" element={<HomeView />} />
             <Route path="home" element={<HomeView />} />

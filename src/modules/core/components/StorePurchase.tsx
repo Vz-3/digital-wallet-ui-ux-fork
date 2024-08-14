@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { CreditCard, QrCode, X } from 'lucide-react';
+import { EStorePurchaseStyles } from '../styles/styleIndex';
 
 type StoreType = {
   id: number;
@@ -21,6 +22,7 @@ enum EScanningMode {
 interface IStorePurchaseProps {
   onScan: (qrCode: string) => void;
 }
+
 const StorePurchase = () => {
   const [scanningMode, setScanningMode] =
     useState<EScanningMode | null>(null); // 'store' or 'item'
@@ -70,15 +72,6 @@ const StorePurchase = () => {
       alert('QR code not found');
     }
   };
-  // alternative solution is to use type guard,
-  // Type guards
-  // function isStoreType(obj: any): obj is StoreType {
-  //     return 'distance' in obj;
-  //   }
-
-  //   function isItemType(obj: any): obj is ItemType {
-  //     return 'price' in obj;
-  //   }
 
   const addToCart = (item: ItemType) => {
     setCart([...cart, item]);
@@ -94,7 +87,6 @@ const StorePurchase = () => {
   const processPayment = () => {
     // In a real app, this would integrate with a payment gateway
     alert(`Payment of $${total.toFixed(2)} processed successfully!`);
-    // Here you would typically call an API to record the transaction
     setCart([]); // reset
     setTotal(0);
     setSelectedStore(null);
@@ -102,12 +94,12 @@ const StorePurchase = () => {
 
   // Simulated QR code scanner
   const QRScanner = ({ onScan }: IStorePurchaseProps) => (
-    <div className="bg-gray-200 p-4 rounded-lg text-center">
+    <div className={EStorePurchaseStyles.QR_SCANNER}>
       <p className="mb-2">Scanning QR Code...</p>
       <input
         type="text"
         placeholder="Enter QR code"
-        className="p-2 border rounded"
+        className={EStorePurchaseStyles.QR_INPUT}
         onKeyDown={(event: React.KeyboardEvent<HTMLInputElement>) => {
           if (event.key === 'Enter') {
             onScan(event.currentTarget.value);
@@ -115,28 +107,28 @@ const StorePurchase = () => {
           }
         }}
       />
-      <p className="mt-2 text-sm text-gray-600">{fooBarMessage}</p>
+      <p className={EStorePurchaseStyles.QR_MESSAGE}>
+        {fooBarMessage}
+      </p>
     </div>
   );
 
   return (
-    <div className="space-y-6">
+    <div className={EStorePurchaseStyles.CONTAINER}>
       {!selectedStore ? (
-        <div className="bg-white shadow overflow-hidden sm:rounded-lg">
-          <div className="px-4 py-5 sm:px-6">
-            <h3 className="text-lg leading-6 font-medium text-gray-900">
+        <div className={EStorePurchaseStyles.SECTION}>
+          <div className={EStorePurchaseStyles.SECTION_HEADER}>
+            <h3 className={EStorePurchaseStyles.SECTION_TITLE}>
               Select a Store
             </h3>
           </div>
           <div className="border-t border-gray-200 px-4 py-5 sm:p-6">
-            {scanningMode === 'store' ? (
+            {scanningMode === EScanningMode.STORE ? (
               <QRScanner onScan={handleScan} />
             ) : (
               <button
-                onClick={() =>
-                  startScanning('store' as EScanningMode)
-                } // EScanningMode.STORE
-                className="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                onClick={() => startScanning(EScanningMode.STORE)}
+                className={`${EStorePurchaseStyles.BUTTON} ${EStorePurchaseStyles.BUTTON_SCAN_STORE}`}
               >
                 <QrCode size={18} className="mr-2" />
                 Scan Store QR Code
@@ -145,12 +137,12 @@ const StorePurchase = () => {
           </div>
         </div>
       ) : (
-        <div className="bg-white shadow overflow-hidden sm:rounded-lg">
-          <div className="px-4 py-5 sm:px-6">
-            <h3 className="text-lg leading-6 font-medium text-gray-900">
+        <div className={EStorePurchaseStyles.SECTION}>
+          <div className={EStorePurchaseStyles.SECTION_HEADER}>
+            <h3 className={EStorePurchaseStyles.SECTION_TITLE}>
               {selectedStore.name}
             </h3>
-            <p className="mt-1 max-w-2xl text-sm text-gray-500">
+            <p className={EStorePurchaseStyles.SECTION_SUBTITLE}>
               {selectedStore.distance}
             </p>
           </div>
@@ -160,14 +152,12 @@ const StorePurchase = () => {
                 <h4 className="text-md font-medium text-gray-900 mb-2">
                   Scan Items
                 </h4>
-                {scanningMode === 'item' ? (
+                {scanningMode === EScanningMode.ITEM ? (
                   <QRScanner onScan={handleScan} />
                 ) : (
                   <button
-                    onClick={() =>
-                      startScanning('item' as EScanningMode)
-                    } // EScanningMode.ITEM
-                    className="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                    onClick={() => startScanning(EScanningMode.ITEM)}
+                    className={`${EStorePurchaseStyles.BUTTON} ${EStorePurchaseStyles.BUTTON_SCAN_ITEM}`}
                   >
                     <QrCode size={18} className="mr-2" />
                     Scan Item QR Code
@@ -180,14 +170,27 @@ const StorePurchase = () => {
                 </h4>
                 <ul className="divide-y divide-gray-200">
                   {cart.map((item) => (
-                    <li key={item.id} className="py-2">
-                      <div className="flex items-center justify-between">
-                        <p className="text-sm font-medium text-gray-900">
+                    <li
+                      key={item.id}
+                      className={EStorePurchaseStyles.CART_ITEM}
+                    >
+                      <div
+                        className={
+                          EStorePurchaseStyles.CART_ITEM_CONTENT
+                        }
+                      >
+                        <p
+                          className={
+                            EStorePurchaseStyles.CART_ITEM_TEXT
+                          }
+                        >
                           {item.name} - ${item.price.toFixed(2)}
                         </p>
                         <button
                           onClick={() => removeFromCart(item)}
-                          className="inline-flex items-center px-2 py-1 border border-transparent text-xs font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                          className={
+                            EStorePurchaseStyles.CART_REMOVE_BUTTON
+                          }
                         >
                           <X size={14} />
                         </button>
@@ -196,12 +199,12 @@ const StorePurchase = () => {
                   ))}
                 </ul>
                 <div className="mt-4">
-                  <p className="text-lg font-medium text-gray-900">
+                  <p className={EStorePurchaseStyles.TOTAL_TEXT}>
                     Total: ${total.toFixed(2)}
                   </p>
                   <button
                     onClick={processPayment}
-                    className="mt-2 w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    className={EStorePurchaseStyles.PAY_BUTTON}
                   >
                     <CreditCard size={18} className="mr-2" />
                     Pay Now

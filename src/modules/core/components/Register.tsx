@@ -1,21 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FormEvent } from 'react';
-
+import { ECoreStyles } from '../styles/styleIndex';
 interface IRegisterProp {
   onLogin: () => void;
-}
-
-enum ERegisterStyles {
-  CONTAINER = 'min-h-screen flex items-center justify-center bg-gray-100',
-  FORM_CONTAINER = 'bg-white p-8 rounded shadow-md w-96',
-  TITLE = 'text-2xl font-bold mb-4',
-  FORM = 'space-y-4',
-  LABEL = 'block text-sm font-medium text-gray-700',
-  INPUT = 'mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2',
-  BUTTON = 'w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-200',
-  LINK = 'text-blue-600 hover:underline',
-  PARAGRAPH = 'mt-4 text-center',
 }
 
 function NRegister({ onLogin }: IRegisterProp) {
@@ -33,15 +21,12 @@ function NRegister({ onLogin }: IRegisterProp) {
   };
 
   return (
-    <div className={ERegisterStyles.CONTAINER}>
-      <div className={ERegisterStyles.FORM_CONTAINER}>
-        <h2 className={ERegisterStyles.TITLE}>Register for Cgash</h2>
-        <form
-          onSubmit={handleSubmit}
-          className={ERegisterStyles.FORM}
-        >
+    <div className={ECoreStyles.CONTAINER}>
+      <div className={ECoreStyles.FORM_CONTAINER}>
+        <h2 className={ECoreStyles.TITLE}>Register for Cgash</h2>
+        <form onSubmit={handleSubmit} className={ECoreStyles.FORM}>
           <div>
-            <label htmlFor="name" className={ERegisterStyles.LABEL}>
+            <label htmlFor="name" className={ECoreStyles.LABEL}>
               Name
             </label>
             <input
@@ -50,11 +35,11 @@ function NRegister({ onLogin }: IRegisterProp) {
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              className={ERegisterStyles.INPUT}
+              className={ECoreStyles.INPUT}
             />
           </div>
           <div>
-            <label htmlFor="email" className={ERegisterStyles.LABEL}>
+            <label htmlFor="email" className={ECoreStyles.LABEL}>
               Email
             </label>
             <input
@@ -63,14 +48,11 @@ function NRegister({ onLogin }: IRegisterProp) {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className={ERegisterStyles.INPUT}
+              className={ECoreStyles.INPUT}
             />
           </div>
           <div>
-            <label
-              htmlFor="password"
-              className={ERegisterStyles.LABEL}
-            >
+            <label htmlFor="password" className={ECoreStyles.LABEL}>
               Password
             </label>
             <input
@@ -79,16 +61,16 @@ function NRegister({ onLogin }: IRegisterProp) {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className={ERegisterStyles.INPUT}
+              className={ECoreStyles.INPUT}
             />
           </div>
-          <button type="submit" className={ERegisterStyles.BUTTON}>
+          <button type="submit" className={ECoreStyles.BUTTON}>
             Register
           </button>
         </form>
-        <p className={ERegisterStyles.PARAGRAPH}>
+        <p className={ECoreStyles.PARAGRAPH}>
           Already have an account?{' '}
-          <Link to="/login" className={ERegisterStyles.LINK}>
+          <Link to="/login" className={ECoreStyles.LINK}>
             Login here
           </Link>
         </p>

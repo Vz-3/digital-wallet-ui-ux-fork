@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Search } from 'lucide-react';
+import { ETransactionsViewStyles } from '../styles/styleIndex';
 
 type TransactionType = {
   id: number;
@@ -9,7 +10,6 @@ type TransactionType = {
 };
 
 function TransactionsView() {
-  // removed setTransactions since it's unused for the time being.
   const [transactions] = useState<TransactionType[]>([
     {
       id: 1,
@@ -54,46 +54,65 @@ function TransactionsView() {
   );
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center bg-white shadow rounded-lg p-2">
-        <Search className="text-gray-400 mr-2" size={20} />
+    <div className={ETransactionsViewStyles.CONTAINER}>
+      <div className={ETransactionsViewStyles.SEARCH_CONTAINER}>
+        <Search
+          className={ETransactionsViewStyles.SEARCH_ICON}
+          size={20}
+        />
         <input
           type="text"
           placeholder="Search transactions..."
-          className="flex-grow outline-none"
+          className={ETransactionsViewStyles.SEARCH_INPUT}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
-      <div className="bg-white shadow overflow-hidden sm:rounded-lg">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
+      <div className={ETransactionsViewStyles.TABLE_CONTAINER}>
+        <table className={ETransactionsViewStyles.TABLE}>
+          <thead className={ETransactionsViewStyles.TABLE_HEADER}>
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th
+                className={ETransactionsViewStyles.TABLE_HEADER_CELL}
+              >
                 Date
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th
+                className={ETransactionsViewStyles.TABLE_HEADER_CELL}
+              >
                 Description
               </th>
-              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th
+                className={
+                  ETransactionsViewStyles.TABLE_HEADER_CELL_RIGHT
+                }
+              >
                 Amount
               </th>
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
+          <tbody className={ETransactionsViewStyles.TABLE_BODY}>
             {filteredTransactions.map((transaction) => (
               <tr key={transaction.id}>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td
+                  className={ETransactionsViewStyles.TABLE_CELL_DATE}
+                >
                   {transaction.date}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                <td
+                  className={
+                    ETransactionsViewStyles.TABLE_CELL_DESCRIPTION
+                  }
+                >
                   {transaction.description}
                 </td>
                 <td
-                  className={`px-6 py-4 whitespace-nowrap text-sm text-right font-medium ${
+                  className={`${
+                    ETransactionsViewStyles.TABLE_CELL_AMOUNT
+                  } ${
                     transaction.amount >= 0
-                      ? 'text-green-600'
-                      : 'text-red-600'
+                      ? ETransactionsViewStyles.AMOUNT_POSITIVE
+                      : ETransactionsViewStyles.AMOUNT_NEGATIVE
                   }`}
                 >
                   ${Math.abs(transaction.amount).toFixed(2)}

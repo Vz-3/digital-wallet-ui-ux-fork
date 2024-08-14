@@ -1,0 +1,137 @@
+export enum ECoreStyles {
+  CONTAINER = 'min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900',
+  FORM_CONTAINER = 'bg-white p-8 rounded shadow-md w-96 dark:bg-gray-800',
+  TITLE = 'text-2xl font-bold mb-4 dark:text-white',
+  FORM = 'space-y-4',
+  LABEL = 'block text-sm font-medium text-gray-700 dark:text-gray-300',
+  INPUT = 'mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 dark:border-gray-600 dark:bg-gray-700 dark:text-white',
+  BUTTON = 'w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-200 dark:bg-blue-500 dark:hover:bg-blue-400',
+  LINK = 'text-blue-600 hover:underline dark:text-blue-400 dark:hover:text-blue-300',
+  PARAGRAPH = 'mt-4 text-center dark:text-gray-300',
+}
+
+export enum EDashboardStyles {
+  MAIN_CONTAINER = 'flex h-screen bg-gray-100 dark:bg-gray-900',
+  APP_HEADER = 'text-2xl font-bold text-blue-600 dark:text-blue-400',
+  SIDEBAR = 'w-64 bg-white shadow-md dark:bg-gray-800 dark:shadow-none',
+  SIDEBAR_NAV_ITEM = 'flex items-center w-full py-2 px-4 dark:text-gray-300 dark:hover:bg-gray-700',
+  SIDEBAR_NAV_ITEM_ACTIVE = 'bg-blue-100 text-blue-600 dark:bg-blue-700 dark:text-blue-300',
+  SIDEBAR_NAV_ITEM_INACTIVE = 'text-gray-600 hover:bg-gray-100 dark:text-gray-500 dark:hover:bg-gray-700',
+  SIDEBAR_FOOTER = 'absolute bottom-0 w-64 p-4 dark:bg-gray-800',
+  MAIN_CONTENT = 'flex-1 overflow-y-auto dark:bg-gray-900',
+  MAIN_HEADER = 'bg-white shadow-sm dark:bg-gray-800 dark:shadow-none',
+  MAIN_HEADER_TITLE = 'max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 dark:text-white',
+  MAIN_CONTENT_WRAPPER = 'max-w-7xl mx-auto py-6 sm:px-6 lg:px-8 dark:text-white',
+  MAIN_ACTIVE_HEADER = 'text-2xl font-semibold text-gray-900 dark:text-gray-100',
+  LOGOUT_BUTTON = 'flex items-center text-gray-600 hover:text-red-500 dark:text-gray-400 dark:hover:text-red-600',
+}
+
+export enum EAccountManagementStyles {
+  CONTAINER = 'space-y-6',
+  SECTION = 'bg-white shadow overflow-hidden sm:rounded-lg dark:bg-gray-800 dark:shadow-none',
+  SECTION_HEADER = 'px-4 py-5 sm:px-6 dark:text-white',
+  SECTION_TITLE = 'text-lg leading-6 font-medium text-gray-900 dark:text-gray-100',
+  LIST = 'border-t border-gray-200 dark:border-gray-700',
+  LIST_ITEM = 'divide-y divide-gray-200 dark:divide-gray-700',
+  ITEM = 'px-4 py-4 sm:px-6',
+  ITEM_CONTENT = 'flex items-center justify-between',
+  ITEM_TEXT = 'text-sm font-medium text-indigo-600 truncate dark:text-indigo-400',
+  ITEM_SUBTEXT = 'text-sm text-gray-500 dark:text-gray-400',
+  ITEM_BALANCE = 'px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-700 dark:text-green-100',
+  BUTTON = 'inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:bg-indigo-500 dark:hover:bg-indigo-400 dark:focus:ring-indigo-400',
+  FORM = 'flex items-center space-x-2',
+  FORM_INPUT = 'flex-grow shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md dark:border-gray-600 dark:bg-gray-700 dark:text-white',
+  FORM_SELECT = 'shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md dark:border-gray-600 dark:bg-gray-700 dark:text-white',
+  FORM_INPUT_LARGE = 'w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md dark:border-gray-600 dark:bg-gray-700 dark:text-white',
+  FORM_INPUT_GROUP = 'flex space-x-2',
+  FORM_BUTTON = 'w-full inline-flex items-center justify-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:bg-indigo-500 dark:hover:bg-indigo-400 dark:focus:ring-indigo-400',
+  DELETE_BUTTON = 'text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300',
+}
+
+export enum EStorePurchaseStyles {
+  CONTAINER = 'space-y-6',
+  SECTION = 'bg-white shadow overflow-hidden sm:rounded-lg dark:bg-gray-800 dark:shadow-none',
+  SECTION_HEADER = 'px-4 py-5 sm:px-6 dark:text-white',
+  SECTION_TITLE = 'text-lg leading-6 font-medium text-gray-900 dark:text-gray-100',
+  SECTION_SUBTITLE = 'mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400',
+  QR_SCANNER = 'bg-gray-200 p-4 rounded-lg text-center dark:bg-gray-700',
+  QR_INPUT = 'p-2 border rounded dark:border-gray-600 dark:bg-gray-700 dark:text-white',
+  QR_MESSAGE = 'mt-2 text-sm text-gray-600 dark:text-gray-400',
+  BUTTON = 'w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md',
+  BUTTON_SCAN_STORE = 'text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:bg-indigo-500 dark:hover:bg-indigo-400 dark:focus:ring-indigo-400',
+  BUTTON_SCAN_ITEM = 'text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 dark:bg-green-500 dark:hover:bg-green-400 dark:focus:ring-green-400',
+  CART_ITEM = 'py-2',
+  CART_ITEM_CONTENT = 'flex items-center justify-between',
+  CART_ITEM_TEXT = 'text-sm font-medium text-gray-900 dark:text-gray-100',
+  CART_REMOVE_BUTTON = 'inline-flex items-center px-2 py-1 border border-transparent text-xs font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 dark:bg-red-500 dark:hover:bg-red-400 dark:focus:ring-red-400',
+  TOTAL_TEXT = 'text-lg font-medium text-gray-900 dark:text-gray-100',
+  PAY_BUTTON = 'mt-2 w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:bg-indigo-500 dark:hover:bg-indigo-400 dark:focus:ring-indigo-400',
+}
+
+export enum EHomeViewStyles {
+  CONTAINER = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 dark:bg-gray-900',
+  CARD = 'bg-white overflow-hidden shadow rounded-lg dark:bg-gray-800 dark:shadow-none',
+  CARD_HEADER = 'px-4 py-5 sm:p-6 dark:text-white',
+  CARD_TITLE = 'text-lg font-medium text-gray-900 mb-4 dark:text-gray-100',
+  BALANCE = 'text-3xl font-bold dark:text-gray-100',
+  ACTIONS_CONTAINER = 'space-y-2',
+  BUTTON = 'w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-200 flex items-center justify-center dark:bg-blue-500 dark:hover:bg-blue-400',
+}
+
+export enum ENotificationsViewStyles {
+  CONTAINER = 'space-y-4',
+  NOTIFICATION = 'bg-white shadow overflow-hidden sm:rounded-lg p-4 flex items-start dark:bg-gray-800 dark:shadow-none',
+  ICON_CONTAINER = 'flex-shrink-0 mr-4',
+  MESSAGE = 'text-sm font-medium text-gray-900 dark:text-gray-100',
+  TIME = 'text-sm text-gray-500 dark:text-gray-400',
+}
+
+export enum EProfileViewStyles {
+  CONTAINER = 'bg-white shadow overflow-hidden sm:rounded-lg dark:bg-gray-800',
+  HEADER = 'px-4 py-5 sm:px-6 dark:text-white',
+  HEADER_TITLE = 'text-lg leading-6 font-medium text-gray-900 dark:text-gray-100',
+  SECTION = 'border-t border-gray-200 dark:border-gray-700',
+  FIELD = 'bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 dark:bg-gray-700 dark:border-gray-600',
+  FIELD_TITLE = 'text-sm font-medium text-gray-500 flex items-center dark:text-gray-400',
+  FIELD_CONTENT = 'mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 dark:text-gray-100',
+  INPUT = 'w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white',
+  FOOTER = 'px-4 py-3 bg-gray-50 text-right sm:px-6 dark:bg-gray-800',
+  BUTTON = 'inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:bg-blue-500 dark:hover:bg-blue-400 dark:focus:ring-blue-400',
+}
+
+export enum ESettingsViewStyles {
+  CONTAINER = 'space-y-6',
+  CARD = 'bg-white shadow overflow-hidden sm:rounded-lg dark:bg-gray-800 dark:shadow-none',
+  HEADER = 'px-4 py-5 sm:px-6 dark:text-white',
+  HEADER_TITLE = 'text-lg leading-6 font-medium text-gray-900 flex items-center dark:text-gray-100',
+  SECTION = 'border-t border-gray-200 px-4 py-5 sm:p-0 dark:border-gray-700',
+  FIELD = 'py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 dark:bg-gray-700',
+  FIELD_TITLE = 'text-sm font-medium text-gray-500 dark:text-gray-400',
+  FIELD_CONTENT = 'mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 dark:text-gray-100',
+  INPUT = 'mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md dark:border-gray-600 dark:bg-gray-700 dark:text-white',
+  TOGGLE = 'relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-blue-400',
+  TOGGLE_ON = 'bg-blue-600 dark:bg-blue-500',
+  TOGGLE_OFF = 'bg-gray-200 dark:bg-gray-600',
+  TOGGLE_KNOB = 'pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200 dark:bg-gray-800',
+  TOGGLE_KNOB_ON = 'translate-x-5',
+  TOGGLE_KNOB_OFF = 'translate-x-0',
+  BUTTON = 'w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:bg-blue-500 dark:hover:bg-blue-400',
+}
+
+export enum ETransactionsViewStyles {
+  CONTAINER = 'space-y-6',
+  SEARCH_CONTAINER = 'flex items-center bg-white shadow rounded-lg p-2 dark:bg-gray-800 dark:shadow-none',
+  SEARCH_ICON = 'text-gray-400 mr-2 dark:text-gray-500',
+  SEARCH_INPUT = 'flex-grow outline-none dark:bg-gray-700 dark:text-white',
+  TABLE_CONTAINER = 'bg-white shadow overflow-hidden sm:rounded-lg dark:bg-gray-800 dark:shadow-none',
+  TABLE = 'min-w-full divide-y divide-gray-200 dark:divide-gray-700',
+  TABLE_HEADER = 'bg-gray-50 dark:bg-gray-800',
+  TABLE_HEADER_CELL = 'px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-300',
+  TABLE_HEADER_CELL_RIGHT = 'px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-300',
+  TABLE_BODY = 'bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700',
+  TABLE_CELL_DATE = 'px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400',
+  TABLE_CELL_DESCRIPTION = 'px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100',
+  TABLE_CELL_AMOUNT = 'px-6 py-4 whitespace-nowrap text-sm text-right font-medium',
+  AMOUNT_POSITIVE = 'text-green-600 dark:text-green-400',
+  AMOUNT_NEGATIVE = 'text-red-600 dark:text-red-400',
+}
