@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { Bell, Globe, Shield } from 'lucide-react';
-
+import { Bell, Globe, Shield, Accessibility } from 'lucide-react';
+import useDarkTheme from '../hooks/useDarkTheme';
+import { ESettingsViewStyles } from '../styles/styleIndex';
 type SettingsType = {
   notifications: NotificationType;
   language: string;
   twoFactor: boolean;
+  isDarkMode: boolean;
 };
 
 type NotificationType = {
@@ -14,6 +16,7 @@ type NotificationType = {
 };
 
 function SettingsView() {
+  const [colorTheme, setTheme] = useDarkTheme();
   const [settings, setSettings] = useState<SettingsType>({
     notifications: {
       email: true,
@@ -22,6 +25,7 @@ function SettingsView() {
     },
     language: 'en',
     twoFactor: false,
+    isDarkMode: colorTheme === 'light' ? true : false,
   });
 
   const handleNotificationChange = (type: keyof NotificationType) => {
