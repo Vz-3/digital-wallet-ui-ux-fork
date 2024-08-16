@@ -61,7 +61,7 @@ function ProfileView() {
               )}
             </dd>
           </div>
-          <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <div className={EProfileViewStyles.FIELD}>
             <dt className={EProfileViewStyles.FIELD_TITLE}>
               <Mail className="mr-2" size={18} /> Email address
             </dt>
