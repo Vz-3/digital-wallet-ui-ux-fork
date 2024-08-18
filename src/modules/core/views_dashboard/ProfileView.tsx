@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { User, Mail, Phone } from 'lucide-react';
 import { EProfileViewStyles } from '../styles/styleIndex';
+import { LogOut } from 'lucide-react';
 
 type EProfile = {
   name: string;
@@ -8,7 +9,11 @@ type EProfile = {
   phone: string;
 };
 
-function ProfileView() {
+interface IProfileViewProps {
+  onLogout: () => void;
+}
+
+function ProfileView({ onLogout }: IProfileViewProps) {
   const [profile, setProfile] = useState<EProfile>({
     name: 'John Doe',
     email: 'john.doe@example.com',
@@ -99,22 +104,29 @@ function ProfileView() {
           </div>
         </dl>
       </div>
-      <div className={EProfileViewStyles.FOOTER}>
+      <div className="w-full justify-end gap-2 px-4 py-3 bg-gray-50 text-right sm:px-6 dark:bg-gray-800 inline-flex">
         {isEditing ? (
           <button
             onClick={handleSave}
-            className={EProfileViewStyles.BUTTON}
+            className="btn-template text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-500"
           >
             Save
           </button>
         ) : (
           <button
             onClick={handleEdit}
-            className={EProfileViewStyles.BUTTON}
+            className="btn-template text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-500"
           >
             Edit
           </button>
         )}
+        <button
+          className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:bg-blue-500 dark:hover:bg-blue-400 dark:focus:ring-blue-400"
+          onClick={onLogout}
+        >
+          <LogOut className="mr-2" size={18} />
+          <div>Logout</div>
+        </button>
       </div>
     </div>
   );
