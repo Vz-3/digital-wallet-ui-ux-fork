@@ -72,7 +72,7 @@ function Dashboard({ onLogout }: IDashboardProps) {
             size={32}
             className="md:mr-1 text-amber-400"
           />
-          <h1 className="hidden md:block text-2xl font-bold text-amber-500">
+          <h1 className="hidden md:block ml-2 text-2xl font-bold text-amber-500">
             Cgash
           </h1>
         </div>
@@ -82,14 +82,14 @@ function Dashboard({ onLogout }: IDashboardProps) {
               key={link.key}
               className={`${
                 hiddenMobileRoutes.includes(link.key)
-                  ? 'hidden md:block'
+                  ? 'hidden md:flex'
                   : 'block'
               }
                 ${
                   activeView === link.key
-                    ? 'text-amber-500 transition ease-in-out delay-150'
-                    : 'text-neutral-200 transition ease-in-out delay-150'
-                } p-4 w-full flex items-center justify-center`}
+                    ? 'text-amber-500 font-bold md:bg-neutral-700 md:dark:bg-white transition ease-in-out delay-150'
+                    : 'text-neutral-950 dark:text-neutral-200 md:hover:bg-neutral-200 md:dark:hover:bg-neutral-500'
+                } p-4 w-full flex items-center justify-center md:justify-normal`}
               onClick={() => handleViewChange(link.key)}
             >
               <div
@@ -103,7 +103,11 @@ function Dashboard({ onLogout }: IDashboardProps) {
               >
                 {React.cloneElement(link.icon, {
                   size: 24,
-                  className: 'text-neutral-600',
+                  className: `${
+                    activeView === link.key
+                      ? 'text-black md:text-neutral-300 md:dark:text-neutral-600'
+                      : 'text-neutral-500 md:text-neutral-600 md:dark:text-neutral-300'
+                  }`,
                 })}
               </div>
               <div className="hidden md:block">{link.label}</div>

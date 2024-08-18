@@ -22,7 +22,7 @@ code {
   }
 
   .sidebar-icon-active {
-    @apply bg-orange-300 rounded-2xl;
+    @apply bg-orange-300 md:bg-transparent rounded-2xl md:rounded-none;
   }
 
   .sidebar-icon-inactive {
