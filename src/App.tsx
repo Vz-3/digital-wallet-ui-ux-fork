@@ -8,7 +8,7 @@ import {
 
 import NLogin from './modules/core/components/Login';
 import NRegister from './modules/core/components/Register';
-import NDashboard from './modules/core/components/Dashboard';
+import Dashboard from './modules/core/components/Dashboard';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -47,7 +47,7 @@ function App() {
             path="/dashboard/*"
             element={
               isAuthenticated ? (
-                <NDashboard onLogout={handleLogout} />
+                <Dashboard onLogout={handleLogout} />
               ) : (
                 <Navigate to="/login" />
               )
