@@ -108,7 +108,7 @@ function ProfileView({ onLogout }: IProfileViewProps) {
         {isEditing ? (
           <button
             onClick={handleSave}
-            className="btn-template text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-500"
+            className="btn-template text-white bg-green-600 hover:bg-green-700 focus:ring-green-500"
           >
             Save
           </button>
@@ -121,7 +121,7 @@ function ProfileView({ onLogout }: IProfileViewProps) {
           </button>
         )}
         <button
-          className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:bg-blue-500 dark:hover:bg-blue-400 dark:focus:ring-blue-400"
+          className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:bg-red-500 dark:hover:bg-red-400 dark:focus:ring-red-400"
           onClick={onLogout}
         >
           <LogOut className="mr-2" size={18} />

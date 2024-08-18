@@ -63,7 +63,7 @@ function TransactionsView() {
         <input
           type="text"
           placeholder="Search transactions..."
-          className={ETransactionsViewStyles.SEARCH_INPUT}
+          className="flex-grow dark:bg-transparent dark:text-white "
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
@@ -73,7 +73,10 @@ function TransactionsView() {
           <thead className={ETransactionsViewStyles.TABLE_HEADER}>
             <tr>
               <th
-                className={ETransactionsViewStyles.TABLE_HEADER_CELL}
+                className={
+                  'hidden dark:hidden dark:sm:block sm:block ' +
+                  ETransactionsViewStyles.TABLE_HEADER_CELL
+                }
               >
                 Date
               </th>
@@ -95,7 +98,10 @@ function TransactionsView() {
             {filteredTransactions.map((transaction) => (
               <tr key={transaction.id}>
                 <td
-                  className={ETransactionsViewStyles.TABLE_CELL_DATE}
+                  className={
+                    'hidden dark:hidden dark:sm:block sm:block ' +
+                    ETransactionsViewStyles.TABLE_CELL_DATE
+                  }
                 >
                   {transaction.date}
                 </td>

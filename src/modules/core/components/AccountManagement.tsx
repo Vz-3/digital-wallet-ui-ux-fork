@@ -199,7 +199,13 @@ const AccountManagement = () => {
               value={newAccountName}
               onChange={(e) => setNewAccountName(e.target.value)}
               placeholder="Account Name"
-              className={EAccountManagementStyles.FORM_INPUT}
+              className={
+                `${
+                  newAccountName.length === 0
+                    ? 'dark:animate-pulse '
+                    : 'dark:animate-none '
+                }` + EAccountManagementStyles.FORM_INPUT
+              }
             />
             <select
               value={newAccountType}
@@ -269,7 +275,13 @@ const AccountManagement = () => {
               value={newBankName}
               onChange={(e) => setNewBankName(e.target.value)}
               placeholder="Bank Name"
-              className={EAccountManagementStyles.FORM_INPUT}
+              className={
+                `${
+                  newBankName.length === 0
+                    ? 'dark:animate-pulse '
+                    : 'dark:animate-none '
+                }` + EAccountManagementStyles.FORM_INPUT
+              }
             />
             <input
               type="text"
@@ -278,7 +290,13 @@ const AccountManagement = () => {
                 setNewBankAccountNumber(e.target.value)
               }
               placeholder="Account Number"
-              className={EAccountManagementStyles.FORM_INPUT}
+              className={
+                `${
+                  newBankAccountNumber.length === 0
+                    ? 'dark:animate-pulse '
+                    : 'dark:animate-none '
+                }` + EAccountManagementStyles.FORM_INPUT
+              }
             />
             <button
               type="submit"
@@ -342,7 +360,13 @@ const AccountManagement = () => {
               value={newCardNumber}
               onChange={(e) => setNewCardNumber(e.target.value)}
               placeholder="Card Number"
-              className={EAccountManagementStyles.FORM_INPUT_LARGE}
+              className={
+                `${
+                  newCardNumber.length === 0
+                    ? 'dark:animate-pulse '
+                    : 'dark:animate-none '
+                }` + EAccountManagementStyles.FORM_INPUT_LARGE
+              }
             />
             <div
               className={EAccountManagementStyles.FORM_INPUT_GROUP}
@@ -352,14 +376,26 @@ const AccountManagement = () => {
                 value={newCardExpiry}
                 onChange={(e) => setNewCardExpiry(e.target.value)}
                 placeholder="MM/YY"
-                className={EAccountManagementStyles.FORM_INPUT}
+                className={
+                  `${
+                    newCardExpiry.length === 0
+                      ? 'dark:animate-pulse '
+                      : 'dark:animate-none '
+                  }` + EAccountManagementStyles.FORM_INPUT
+                }
               />
               <input
                 type="text"
                 value={newCardCVV}
                 onChange={(e) => setNewCardCVV(e.target.value)}
                 placeholder="CVV"
-                className={EAccountManagementStyles.FORM_INPUT}
+                className={
+                  `${
+                    newCardCVV.length === 0
+                      ? 'dark:animate-pulse '
+                      : 'dark:animate-none '
+                  }` + EAccountManagementStyles.FORM_INPUT
+                }
               />
             </div>
             <button

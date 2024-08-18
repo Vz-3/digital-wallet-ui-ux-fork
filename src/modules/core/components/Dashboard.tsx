@@ -64,9 +64,9 @@ function Dashboard({ onLogout }: IDashboardProps) {
   };
 
   return (
-    <div className="flex h-screen bg-gray-100 ">
+    <div className="flex h-screen bg-gray-100 dark:bg-gray-900 ">
       {/* Sidebar */}
-      <div className="h-screen w-16 md:w-56  bg-neutral-700">
+      <div className="h-screen w-16 md:w-56  bg-amber-50 dark:bg-neutral-700">
         <div className="p-4 flex ">
           <WalletMinimal
             size={32}
@@ -87,8 +87,8 @@ function Dashboard({ onLogout }: IDashboardProps) {
               }
                 ${
                   activeView === link.key
-                    ? 'bg-neutral-600 text-amber-500'
-                    : 'text-neutral-200'
+                    ? 'text-amber-500 transition ease-in-out delay-150'
+                    : 'text-neutral-200 transition ease-in-out delay-150'
                 } p-4 w-full flex items-center justify-center`}
               onClick={() => handleViewChange(link.key)}
             >
@@ -96,8 +96,8 @@ function Dashboard({ onLogout }: IDashboardProps) {
                 className={`sidebar-icon 
                     ${
                       activeView === link.key
-                        ? 'sidebar-icon-active'
-                        : 'sidebar-icon-inactive'
+                        ? 'sidebar-icon-active shadow-xl md:shadow-none transition ease-in-out delay-100'
+                        : 'sidebar-icon-inactive transition ease-in-out delay-100'
                     }
                     `}
               >
@@ -112,7 +112,7 @@ function Dashboard({ onLogout }: IDashboardProps) {
         </nav>
       </div>
       {/* Bottombar */}
-      <div className="fixed inline-block w-full h-14 bottom-0 z-10 bg-neutral-600 md:hidden">
+      <div className="fixed inline-block w-full h-14 bottom-0 z-10 bg-[#6e5951] dark:bg-[#252525] md:hidden">
         <nav className="m-4">
           {bottombarLinks.map((link) => (
             <button
@@ -125,8 +125,8 @@ function Dashboard({ onLogout }: IDashboardProps) {
                   size: 24,
                   className: `${
                     activeView === link.key
-                      ? 'text-amber-500'
-                      : 'text-neutral-800'
+                      ? 'text-amber-300 dark:text-amber-200'
+                      : 'text-amber-100 dark:text-gray-100'
                   }`,
                 })}
               </div>
@@ -135,8 +135,8 @@ function Dashboard({ onLogout }: IDashboardProps) {
         </nav>
       </div>
       {/* Main content */}
-      <div className="flex-1 overflow-y-auto pb-10">
-        <header className="bg-white shadow-sm ">
+      <div className="flex-1 overflow-y-auto pb-10 md:pb-0">
+        <header className="bg-white shadow-sm dark:bg-zinc-800">
           <div className="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 dark:text-white">
             <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">
               {activeView.charAt(0).toUpperCase() +
