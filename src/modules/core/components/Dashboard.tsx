@@ -6,7 +6,7 @@ import {
   Bell,
   User,
   Settings,
-  LogOut,
+  WalletMinimal,
   ShoppingBag,
 } from 'lucide-react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
@@ -17,7 +17,6 @@ import ProfileView from '../views_dashboard/ProfileView';
 import SettingsView from '../views_dashboard/SettingsView';
 import AccountManagement from './AccountManagement';
 import StorePurchase from './StorePurchase';
-import { EDashboardStyles } from '../styles/styleIndex';
 
 interface IDashboardProps {
   onLogout: () => void;
@@ -29,7 +28,7 @@ interface ISidebarLink {
   key: string;
 }
 
-function NDashboard({ onLogout }: IDashboardProps) {
+function Dashboard({ onLogout }: IDashboardProps) {
   const [activeView, setActiveView] = useState('home');
   const navigate = useNavigate();
 
@@ -51,59 +50,101 @@ function NDashboard({ onLogout }: IDashboardProps) {
     { icon: <Settings />, label: 'Settings', key: 'settings' },
   ];
 
+  const hiddenMobileRoutes = ['home', 'notifications', 'profile'];
+
+  const bottombarLinks: ISidebarLink[] = [
+    { icon: <Home />, label: 'Home', key: 'home' },
+    { icon: <Bell />, label: 'Notifications', key: 'notifications' },
+    { icon: <User />, label: 'Profile', key: 'profile' },
+  ];
+
   const handleViewChange = (key: string) => {
     setActiveView(key);
     navigate(key);
   };
 
   return (
-    <div className={EDashboardStyles.MAIN_CONTAINER}>
+    <div className="flex h-screen bg-gray-100 ">
       {/* Sidebar */}
-      <div className={EDashboardStyles.SIDEBAR}>
-        <div className="p-4">
-          <h1 className={EDashboardStyles.APP_HEADER}>Cgash</h1>
+      <div className="h-screen w-16 md:w-56  bg-neutral-700">
+        <div className="p-4 flex ">
+          <WalletMinimal
+            size={32}
+            className="md:mr-1 text-amber-400"
+          />
+          <h1 className="hidden md:block text-2xl font-bold text-amber-500">
+            Cgash
+          </h1>
         </div>
         <nav className="mt-6">
           {sidebarLinks.map((link) => (
             <button
               key={link.key}
-              className={`${EDashboardStyles.SIDEBAR_NAV_ITEM} ${
-                activeView === link.key
-                  ? EDashboardStyles.SIDEBAR_NAV_ITEM_ACTIVE
-                  : EDashboardStyles.SIDEBAR_NAV_ITEM_INACTIVE
-              }`}
+              className={`${
+                hiddenMobileRoutes.includes(link.key)
+                  ? 'hidden md:block'
+                  : 'block'
+              }
+                ${
+                  activeView === link.key
+                    ? 'bg-neutral-600 text-amber-500'
+                    : 'text-neutral-200'
+                } p-4 w-full flex items-center justify-center`}
               onClick={() => handleViewChange(link.key)}
             >
-              {React.cloneElement(link.icon, {
-                size: 18,
-                className: 'mr-2',
-              })}
-              {link.label}
+              <div
+                className={`sidebar-icon 
+                    ${
+                      activeView === link.key
+                        ? 'sidebar-icon-active'
+                        : 'sidebar-icon-inactive'
+                    }
+                    `}
+              >
+                {React.cloneElement(link.icon, {
+                  size: 24,
+                  className: 'text-neutral-600',
+                })}
+              </div>
+              <div className="hidden md:block">{link.label}</div>
             </button>
           ))}
         </nav>
-        <div className={EDashboardStyles.SIDEBAR_FOOTER}>
-          <button
-            className={EDashboardStyles.LOGOUT_BUTTON}
-            onClick={onLogout}
-          >
-            <LogOut className="mr-2" size={18} />
-            Logout
-          </button>
-        </div>
       </div>
-
-      {/* Main Content */}
-      <div className="flex-1 overflow-y-auto">
-        <header className={EDashboardStyles.MAIN_HEADER}>
-          <div className={EDashboardStyles.MAIN_HEADER_TITLE}>
-            <h1 className={EDashboardStyles.MAIN_ACTIVE_HEADER}>
+      {/* Bottombar */}
+      <div className="fixed inline-block w-full h-14 bottom-0 z-10 bg-neutral-600 md:hidden">
+        <nav className="m-4">
+          {bottombarLinks.map((link) => (
+            <button
+              key={link.key}
+              className="p-1 w-1/3 inline-flex items-center justify-center"
+              onClick={() => handleViewChange(link.key)}
+            >
+              <div className="">
+                {React.cloneElement(link.icon, {
+                  size: 24,
+                  className: `${
+                    activeView === link.key
+                      ? 'text-amber-500'
+                      : 'text-neutral-800'
+                  }`,
+                })}
+              </div>
+            </button>
+          ))}
+        </nav>
+      </div>
+      {/* Main content */}
+      <div className="flex-1 overflow-y-auto pb-10">
+        <header className="bg-white shadow-sm ">
+          <div className="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 dark:text-white">
+            <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">
               {activeView.charAt(0).toUpperCase() +
                 activeView.slice(1)}
             </h1>
           </div>
         </header>
-        <main className={EDashboardStyles.MAIN_CONTENT_WRAPPER}>
+        <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8 dark:text-white">
           <Routes>
             <Route path="/" element={<HomeView />} />
             <Route path="home" element={<HomeView />} />
@@ -120,7 +161,10 @@ function NDashboard({ onLogout }: IDashboardProps) {
               path="notifications"
               element={<NotificationsView />}
             />
-            <Route path="profile" element={<ProfileView />} />
+            <Route
+              path="profile"
+              element={<ProfileView onLogout={onLogout} />}
+            />
             <Route path="settings" element={<SettingsView />} />
           </Routes>
         </main>
@@ -129,4 +173,4 @@ function NDashboard({ onLogout }: IDashboardProps) {
   );
 }
 
-export default NDashboard;
+export default Dashboard;
