@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FormEvent } from 'react';
 import { ECoreStyles } from '../styles/styleIndex';
+import { loginUserAPI } from '../services/apiService';
+import { updateToken } from '../services/apiAuthService';
 // can be placed on a shared/commons folder.
 interface ILoginProp {
   onLogin: () => void;
 }
 
-function NLogin({ onLogin }: ILoginProp) {
+function Login({ onLogin }: ILoginProp) {
   // React components should be capitalized first.
 
   const [loginEmail, setEmail] = useState('');
@@ -16,16 +18,35 @@ function NLogin({ onLogin }: ILoginProp) {
 
   const fooBarMessage = "Don't have an account?";
 
-  const handleLoginSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleLoginSubmit = async (
+    event: FormEvent<HTMLFormElement>
+  ) => {
     console.log('Submitting form...');
     event.preventDefault();
     /*
     Insert API call here to verify credentials.
     */
+    try {
+      const response = await loginUserAPI({
+        email: loginEmail,
+        password: loginPassword,
+      });
 
-    onLogin(); // to be removed?
-    console.log('Login successful ', Date.now());
-    navigate('/dashboard');
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error('Invalid credentials! ' + data.error);
+      }
+      console.log(data.token);
+
+      updateToken(data.token);
+
+      onLogin();
+
+      console.log(`Logged in as ${loginEmail} at ${Date.now()}`);
+      navigate('/dashboard');
+    } catch (error) {
+      alert(`${error}`);
+    }
   };
 
   // if the return statement is not a one-liner, it should be enclosed in parentheses.
@@ -90,4 +111,4 @@ function NLogin({ onLogin }: ILoginProp) {
   );
 }
 
-export default NLogin;
+export default Login;

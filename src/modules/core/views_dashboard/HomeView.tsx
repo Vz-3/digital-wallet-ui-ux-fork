@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ArrowUpRight, ArrowDownLeft, Wallet } from 'lucide-react';
 import BigNumber from 'bignumber.js';
 import { EHomeViewStyles } from '../styles/styleIndex';
+import { getBalanceAPI } from '../services/apiAuthService';
 
 function HomeView() {
   // Oddly enough, there are currencies that have 3 decimal places. Also currencies like JPY with no decimal places.
   const currencyNumber = BigNumber.clone({ DECIMAL_PLACES: 3 });
 
   const [balance, setBalance] = useState<BigNumber>(
-    currencyNumber(5000)
+    currencyNumber(0)
   );
 
   const handleSendMoney = () => {
@@ -53,6 +54,25 @@ function HomeView() {
     }
   };
 
+  const handleBalanceUpdate = async () => {
+    try {
+      const request = await getBalanceAPI();
+      const data = await request.json();
+
+      if (!request.ok) {
+        throw new Error('Failed to get balance: ' + data.error);
+      }
+      setBalance(currencyNumber(data.balance));
+    } catch (error) {
+      alert(`${error}`);
+    }
+  };
+
+  useEffect(() => {
+    console.log('Updating balance!');
+    handleBalanceUpdate();
+  }, [setBalance]);
+
   return (
     <div className={EHomeViewStyles.CONTAINER}>
       <div className={EHomeViewStyles.CARD}>
@@ -71,6 +91,12 @@ function HomeView() {
             Quick Actions
           </h3>
           <div className={EHomeViewStyles.ACTIONS_CONTAINER}>
+            <button
+              onClick={handleBalanceUpdate}
+              className={EHomeViewStyles.BUTTON}
+            >
+              Get balance
+            </button>
             <button
               onClick={handleSendMoney}
               className={EHomeViewStyles.BUTTON}

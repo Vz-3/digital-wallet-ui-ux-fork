@@ -2,22 +2,42 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FormEvent } from 'react';
 import { ECoreStyles } from '../styles/styleIndex';
-interface IRegisterProp {
-  onLogin: () => void;
-}
+import { registerUserAPI } from '../services/apiService';
 
-function NRegister({ onLogin }: IRegisterProp) {
-  const [name, setName] = useState('');
+function Register() {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // Here you would typically make an API call to register the user
-    console.log('Registration attempt:', name, email, password);
-    onLogin(); // Automatically log in the user after successful registration
-    navigate('/dashboard'); // Navigate to dashboard after successful registration
+    console.log(
+      'Registration attempt:',
+      firstName,
+      lastName,
+      email,
+      password
+    );
+    try {
+      const response = await registerUserAPI({
+        firstName,
+        lastName,
+        email,
+        password,
+      });
+
+      const data = await response.json();
+      if (!response.ok)
+        throw new Error('Failed to register user! ' + data.error);
+      alert(`${data.message}`);
+
+      navigate('/login');
+    } catch (error) {
+      alert(`${error}`);
+    }
   };
 
   return (
@@ -26,14 +46,27 @@ function NRegister({ onLogin }: IRegisterProp) {
         <h2 className={ECoreStyles.TITLE}>Register for Cgash</h2>
         <form onSubmit={handleSubmit} className={ECoreStyles.FORM}>
           <div>
-            <label htmlFor="name" className={ECoreStyles.LABEL}>
-              Name
+            <label htmlFor="fn_name" className={ECoreStyles.LABEL}>
+              First Name
             </label>
             <input
               type="text"
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              id="fn_name"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              required
+              className={ECoreStyles.INPUT}
+            />
+          </div>
+          <div>
+            <label htmlFor="ln_name" className={ECoreStyles.LABEL}>
+              Last Name
+            </label>
+            <input
+              type="text"
+              id="ln_name"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
               required
               className={ECoreStyles.INPUT}
             />
@@ -79,4 +112,4 @@ function NRegister({ onLogin }: IRegisterProp) {
   );
 }
 
-export default NRegister;
+export default Register;
