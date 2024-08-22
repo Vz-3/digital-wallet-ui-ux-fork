@@ -147,9 +147,9 @@ const StorePurchase = () => {
             </p>
           </div>
           <div className="border-t border-gray-200 px-4 py-5 sm:px-6">
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <h4 className="text-md font-medium text-gray-900 mb-2">
+            <div className="md:grid md:grid-cols-2 md:gap-4">
+              <div className="p-1">
+                <h4 className="text-md font-medium text-gray-900 dark:text-gray-100 mb-2">
                   Scan Items
                 </h4>
                 {scanningMode === EScanningMode.ITEM ? (
@@ -164,8 +164,8 @@ const StorePurchase = () => {
                   </button>
                 )}
               </div>
-              <div>
-                <h4 className="text-md font-medium text-gray-900 mb-2">
+              <div className="p-1">
+                <h4 className="mt-1 text-md font-medium text-gray-900 dark:text-gray-100 mb-2">
                   Your Cart
                 </h4>
                 <ul className="divide-y divide-gray-200">

@@ -6,18 +6,25 @@ import {
   Navigate,
 } from 'react-router-dom';
 
-import NLogin from './modules/core/components/Login';
-import NRegister from './modules/core/components/Register';
-import NDashboard from './modules/core/components/Dashboard';
+import Login from './modules/core/components/Login';
+import Register from './modules/core/components/Register';
+import Dashboard from './modules/core/components/Dashboard';
+import {
+  checkToken,
+  logout,
+} from './modules/core/services/apiAuthService';
+import useDarkTheme from './modules/core/hooks/useDarkTheme';
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(checkToken);
+  const [,] = useDarkTheme();
 
   const handleLogin = () => {
     setIsAuthenticated(true);
   };
 
   const handleLogout = () => {
+    logout();
     setIsAuthenticated(false);
   };
   // Most of the codebase lacks proper validation.
@@ -37,17 +44,14 @@ function App() {
           />
           <Route
             path="/login"
-            element={<NLogin onLogin={handleLogin} />}
+            element={<Login onLogin={handleLogin} />}
           />
-          <Route
-            path="/register"
-            element={<NRegister onLogin={handleLogin} />}
-          />
+          <Route path="/register" element={<Register />} />
           <Route
             path="/dashboard/*"
             element={
               isAuthenticated ? (
-                <NDashboard onLogout={handleLogout} />
+                <Dashboard onLogout={handleLogout} />
               ) : (
                 <Navigate to="/login" />
               )
@@ -59,5 +63,5 @@ function App() {
   );
 }
 
-// change /register to it's own compontent.
+// change /register to it's own component.
 export default App;

@@ -197,7 +197,7 @@ function SettingsView() {
           </div>
         </div>
       </div>
-      <div className="mt-6">
+      <div className="mt-4 flex justify-center">
         <button
           onClick={() => alert('Settings saved!')}
           className={ESettingsViewStyles.BUTTON}

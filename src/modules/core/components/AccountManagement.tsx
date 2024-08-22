@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import {
   PlusCircle,
   CreditCard,
@@ -7,6 +7,11 @@ import {
 } from 'lucide-react';
 import BigNumber from 'bignumber.js';
 import { EAccountManagementStyles } from '../styles/styleIndex';
+import {
+  addPaymentMethodAPI,
+  deletePaymentMethodAPI,
+  listPaymentMethodsAPI,
+} from '../services/apiAuthService';
 
 type AccountType = {
   id: number;
@@ -52,14 +57,7 @@ const AccountManagement = () => {
 
   const [paymentMethods, setPaymentMethods] = useState<
     PaymentMethodType[]
-  >([
-    {
-      id: 1,
-      type: 'Credit Card',
-      last4: '5678',
-      expiryDate: '12/24',
-    },
-  ]);
+  >([]);
 
   const [newAccountName, setNewAccountName] = useState('');
   const [newAccountType, setNewAccountType] = useState('Checking');
@@ -103,23 +101,37 @@ const AccountManagement = () => {
     }
   };
 
-  const handleAddPaymentMethod = (
+  const handleAddPaymentMethod = async (
     event: FormEvent<HTMLFormElement>
   ) => {
     event.preventDefault();
     if (newCardNumber && newCardExpiry && newCardCVV) {
-      setPaymentMethods([
-        ...paymentMethods,
-        {
-          id: paymentMethods.length + 1,
-          type: 'Credit Card',
-          last4: newCardNumber.slice(-4),
-          expiryDate: newCardExpiry,
-        },
-      ]);
-      setNewCardNumber('');
-      setNewCardExpiry('');
-      setNewCardCVV('');
+      try {
+        const response = await addPaymentMethodAPI();
+        const data = await response.json();
+        if (!response.ok) {
+          throw new Error(
+            'Failed to add payment method: ' + data.error
+          );
+        }
+
+        console.log(data);
+        setPaymentMethods([
+          ...paymentMethods,
+          {
+            id: paymentMethods.length + 1,
+            type: 'card',
+            last4: newCardNumber.slice(-4),
+            expiryDate: newCardExpiry,
+          },
+        ]);
+        setNewCardNumber('');
+        setNewCardExpiry('');
+        setNewCardCVV('');
+        console.log('Payment method added successfully!');
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
@@ -131,11 +143,56 @@ const AccountManagement = () => {
     setLinkedBanks(linkedBanks.filter((bank) => bank.id !== id));
   };
 
-  const handleRemovePaymentMethod = (id: number) => {
-    setPaymentMethods(
-      paymentMethods.filter((method) => method.id !== id)
-    );
+  const handleRemovePaymentMethod = async (id: number) => {
+    try {
+      const response = await deletePaymentMethodAPI();
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(
+          'Failed to delete payment method: ' + data.error
+        );
+      }
+      console.log(data);
+      setPaymentMethods(
+        paymentMethods.filter((method) => method.id !== id)
+      );
+      console.log('Payment method deleted successfully!');
+    } catch (error) {
+      console.error(error);
+    }
   };
+
+  const checkExistingPaymentMethods = async () => {
+    try {
+      const response = await listPaymentMethodsAPI();
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(
+          'Failed to get payment methods: ' + data.error
+        );
+      }
+      console.log(data);
+
+      if (data.length !== 0) {
+        const cardYear = data[0].card.expYear.toString().slice(-2);
+        const expiryDate = `${data[0].card.expMonth}/${cardYear}`;
+        setPaymentMethods([
+          {
+            id: 1,
+            type: data[0].type,
+            last4: data[0].card.last4,
+            expiryDate: expiryDate,
+          },
+        ]);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    checkExistingPaymentMethods();
+  }, []);
 
   return (
     <div className={EAccountManagementStyles.CONTAINER}>
@@ -199,7 +256,13 @@ const AccountManagement = () => {
               value={newAccountName}
               onChange={(e) => setNewAccountName(e.target.value)}
               placeholder="Account Name"
-              className={EAccountManagementStyles.FORM_INPUT}
+              className={
+                `${
+                  newAccountName.length === 0
+                    ? 'dark:animate-pulse '
+                    : 'dark:animate-none '
+                }` + EAccountManagementStyles.FORM_INPUT
+              }
             />
             <select
               value={newAccountType}
@@ -269,7 +332,13 @@ const AccountManagement = () => {
               value={newBankName}
               onChange={(e) => setNewBankName(e.target.value)}
               placeholder="Bank Name"
-              className={EAccountManagementStyles.FORM_INPUT}
+              className={
+                `${
+                  newBankName.length === 0
+                    ? 'dark:animate-pulse '
+                    : 'dark:animate-none '
+                }` + EAccountManagementStyles.FORM_INPUT
+              }
             />
             <input
               type="text"
@@ -278,7 +347,13 @@ const AccountManagement = () => {
                 setNewBankAccountNumber(e.target.value)
               }
               placeholder="Account Number"
-              className={EAccountManagementStyles.FORM_INPUT}
+              className={
+                `${
+                  newBankAccountNumber.length === 0
+                    ? 'dark:animate-pulse '
+                    : 'dark:animate-none '
+                }` + EAccountManagementStyles.FORM_INPUT
+              }
             />
             <button
               type="submit"
@@ -342,7 +417,13 @@ const AccountManagement = () => {
               value={newCardNumber}
               onChange={(e) => setNewCardNumber(e.target.value)}
               placeholder="Card Number"
-              className={EAccountManagementStyles.FORM_INPUT_LARGE}
+              className={
+                `${
+                  newCardNumber.length === 0
+                    ? 'dark:animate-pulse '
+                    : 'dark:animate-none '
+                }` + EAccountManagementStyles.FORM_INPUT_LARGE
+              }
             />
             <div
               className={EAccountManagementStyles.FORM_INPUT_GROUP}
@@ -352,14 +433,26 @@ const AccountManagement = () => {
                 value={newCardExpiry}
                 onChange={(e) => setNewCardExpiry(e.target.value)}
                 placeholder="MM/YY"
-                className={EAccountManagementStyles.FORM_INPUT}
+                className={
+                  `${
+                    newCardExpiry.length === 0
+                      ? 'dark:animate-pulse '
+                      : 'dark:animate-none '
+                  }` + EAccountManagementStyles.FORM_INPUT
+                }
               />
               <input
                 type="text"
                 value={newCardCVV}
                 onChange={(e) => setNewCardCVV(e.target.value)}
                 placeholder="CVV"
-                className={EAccountManagementStyles.FORM_INPUT}
+                className={
+                  `${
+                    newCardCVV.length === 0
+                      ? 'dark:animate-pulse '
+                      : 'dark:animate-none '
+                  }` + EAccountManagementStyles.FORM_INPUT
+                }
               />
             </div>
             <button
