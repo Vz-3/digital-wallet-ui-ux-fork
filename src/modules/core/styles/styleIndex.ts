@@ -69,7 +69,7 @@ export enum EStorePurchaseStyles {
 }
 
 export enum EHomeViewStyles {
-  CONTAINER = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 dark:bg-gray-900',
+  CONTAINER = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 bg-gray-50 dark:bg-gray-900',
   CARD = 'bg-white overflow-hidden shadow sm:rounded-lg dark:bg-gray-800 dark:shadow-none',
   CARD_HEADER = 'px-4 py-5 sm:p-6 dark:text-white',
   CARD_TITLE = 'text-lg font-medium text-gray-900 mb-4 dark:text-gray-100',

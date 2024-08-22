@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import {
   PlusCircle,
   CreditCard,
@@ -7,6 +7,11 @@ import {
 } from 'lucide-react';
 import BigNumber from 'bignumber.js';
 import { EAccountManagementStyles } from '../styles/styleIndex';
+import {
+  addPaymentMethodAPI,
+  deletePaymentMethodAPI,
+  listPaymentMethodsAPI,
+} from '../services/apiAuthService';
 
 type AccountType = {
   id: number;
@@ -52,14 +57,7 @@ const AccountManagement = () => {
 
   const [paymentMethods, setPaymentMethods] = useState<
     PaymentMethodType[]
-  >([
-    {
-      id: 1,
-      type: 'Credit Card',
-      last4: '5678',
-      expiryDate: '12/24',
-    },
-  ]);
+  >([]);
 
   const [newAccountName, setNewAccountName] = useState('');
   const [newAccountType, setNewAccountType] = useState('Checking');
@@ -103,23 +101,37 @@ const AccountManagement = () => {
     }
   };
 
-  const handleAddPaymentMethod = (
+  const handleAddPaymentMethod = async (
     event: FormEvent<HTMLFormElement>
   ) => {
     event.preventDefault();
     if (newCardNumber && newCardExpiry && newCardCVV) {
-      setPaymentMethods([
-        ...paymentMethods,
-        {
-          id: paymentMethods.length + 1,
-          type: 'Credit Card',
-          last4: newCardNumber.slice(-4),
-          expiryDate: newCardExpiry,
-        },
-      ]);
-      setNewCardNumber('');
-      setNewCardExpiry('');
-      setNewCardCVV('');
+      try {
+        const response = await addPaymentMethodAPI();
+        const data = await response.json();
+        if (!response.ok) {
+          throw new Error(
+            'Failed to add payment method: ' + data.error
+          );
+        }
+
+        console.log(data);
+        setPaymentMethods([
+          ...paymentMethods,
+          {
+            id: paymentMethods.length + 1,
+            type: 'card',
+            last4: newCardNumber.slice(-4),
+            expiryDate: newCardExpiry,
+          },
+        ]);
+        setNewCardNumber('');
+        setNewCardExpiry('');
+        setNewCardCVV('');
+        console.log('Payment method added successfully!');
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
@@ -131,11 +143,56 @@ const AccountManagement = () => {
     setLinkedBanks(linkedBanks.filter((bank) => bank.id !== id));
   };
 
-  const handleRemovePaymentMethod = (id: number) => {
-    setPaymentMethods(
-      paymentMethods.filter((method) => method.id !== id)
-    );
+  const handleRemovePaymentMethod = async (id: number) => {
+    try {
+      const response = await deletePaymentMethodAPI();
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(
+          'Failed to delete payment method: ' + data.error
+        );
+      }
+      console.log(data);
+      setPaymentMethods(
+        paymentMethods.filter((method) => method.id !== id)
+      );
+      console.log('Payment method deleted successfully!');
+    } catch (error) {
+      console.error(error);
+    }
   };
+
+  const checkExistingPaymentMethods = async () => {
+    try {
+      const response = await listPaymentMethodsAPI();
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(
+          'Failed to get payment methods: ' + data.error
+        );
+      }
+      console.log(data);
+
+      if (data.length !== 0) {
+        const cardYear = data[0].card.expYear.toString().slice(-2);
+        const expiryDate = `${data[0].card.expMonth}/${cardYear}`;
+        setPaymentMethods([
+          {
+            id: 1,
+            type: data[0].type,
+            last4: data[0].card.last4,
+            expiryDate: expiryDate,
+          },
+        ]);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    checkExistingPaymentMethods();
+  }, []);
 
   return (
     <div className={EAccountManagementStyles.CONTAINER}>

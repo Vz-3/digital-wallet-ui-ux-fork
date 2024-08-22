@@ -1,53 +1,64 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Search } from 'lucide-react';
 import { ETransactionsViewStyles } from '../styles/styleIndex';
+import { getTransactionsAPI } from '../services/apiAuthService';
 
 type TransactionType = {
-  id: number;
+  id: string;
+  type: string;
   date: string;
-  description: string;
   amount: number;
 };
 
 function TransactionsView() {
-  const [transactions] = useState<TransactionType[]>([
-    {
-      id: 1,
-      date: '2023-07-01',
-      description: 'Grocery Store',
-      amount: -75.5,
-    },
-    {
-      id: 2,
-      date: '2023-07-02',
-      description: 'Salary Deposit',
-      amount: 3000,
-    },
-    {
-      id: 3,
-      date: '2023-07-03',
-      description: 'Electric Bill',
-      amount: -120,
-    },
-    {
-      id: 4,
-      date: '2023-07-04',
-      description: 'Online Purchase',
-      amount: -50.25,
-    },
-    {
-      id: 5,
-      date: '2023-07-05',
-      description: 'Restaurant',
-      amount: -45,
-    },
-  ]);
+  const [transactions, setTransactions] = useState<TransactionType[]>(
+    []
+  );
 
   const [searchTerm, setSearchTerm] = useState('');
 
+  const getTransactionsHistory = async () => {
+    try {
+      const response = await getTransactionsAPI();
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error('Error fetching transactions!');
+      }
+
+      if (data.length === 0) {
+        console.log('No transactions found.');
+      }
+
+      const transactionsHistory: TransactionType[] = [];
+
+      for (const records of data) {
+        transactionsHistory.push({
+          id: records.id,
+          type: records.type,
+          date: new Date(records.createdAt).toLocaleDateString(),
+          amount: records.amount,
+        });
+      }
+
+      console.log(transactionsHistory);
+
+      setTransactions(transactionsHistory);
+    } catch (error) {
+      console.log(`${error}`);
+    }
+  };
+  useEffect(() => {
+    try {
+      getTransactionsHistory();
+    } catch (error) {
+      console.log(`${error}`);
+    }
+  }, []);
+
   const filteredTransactions = transactions.filter(
     (transaction) =>
-      transaction.description
+      transaction.type
         .toLowerCase()
         .includes(searchTerm.toLowerCase()) ||
       transaction.amount.toString().includes(searchTerm)
@@ -68,22 +79,31 @@ function TransactionsView() {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
-      <div className={ETransactionsViewStyles.TABLE_CONTAINER}>
+      <div
+        className={`${
+          transactions.length === 0 ? 'visible' : 'hidden'
+        }`}
+      >
+        <h3>No transactions found. Please check back later.</h3>
+      </div>
+      <div
+        className={
+          ETransactionsViewStyles.TABLE_CONTAINER +
+          ` ${transactions.length === 0 ? 'hidden' : 'visible'}`
+        }
+      >
         <table className={ETransactionsViewStyles.TABLE}>
           <thead className={ETransactionsViewStyles.TABLE_HEADER}>
             <tr>
               <th
-                className={
-                  'hidden dark:hidden dark:sm:block sm:block ' +
-                  ETransactionsViewStyles.TABLE_HEADER_CELL
-                }
+                className={ETransactionsViewStyles.TABLE_HEADER_CELL}
               >
                 Date
               </th>
               <th
                 className={ETransactionsViewStyles.TABLE_HEADER_CELL}
               >
-                Description
+                Type
               </th>
               <th
                 className={
@@ -98,10 +118,7 @@ function TransactionsView() {
             {filteredTransactions.map((transaction) => (
               <tr key={transaction.id}>
                 <td
-                  className={
-                    'hidden dark:hidden dark:sm:block sm:block ' +
-                    ETransactionsViewStyles.TABLE_CELL_DATE
-                  }
+                  className={ETransactionsViewStyles.TABLE_CELL_DATE}
                 >
                   {transaction.date}
                 </td>
@@ -110,7 +127,7 @@ function TransactionsView() {
                     ETransactionsViewStyles.TABLE_CELL_DESCRIPTION
                   }
                 >
-                  {transaction.description}
+                  {transaction.type}
                 </td>
                 <td
                   className={`${

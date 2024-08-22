@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { User, Mail, Phone } from 'lucide-react';
 import { EProfileViewStyles } from '../styles/styleIndex';
 import { LogOut } from 'lucide-react';
+import { getProfile } from '../services/apiAuthService';
 
 type EProfile = {
   name: string;
@@ -15,8 +16,8 @@ interface IProfileViewProps {
 
 function ProfileView({ onLogout }: IProfileViewProps) {
   const [profile, setProfile] = useState<EProfile>({
-    name: 'John Doe',
-    email: 'john.doe@example.com',
+    name: '',
+    email: '',
     phone: '+1 (555) 123-4567',
   });
 
@@ -38,6 +39,27 @@ function ProfileView({ onLogout }: IProfileViewProps) {
     const { name, value } = event.target;
     setProfile((prevProfile) => ({ ...prevProfile, [name]: value }));
   };
+
+  const fetchProfile = async () => {
+    try {
+      const profileData = await getProfile();
+      setProfile({
+        name: profileData.firstName + ' ' + profileData.lastName,
+        email: profileData.email,
+        phone: profile.phone,
+      });
+    } catch (error) {
+      alert('Error fetching profile data!' + error);
+    }
+  };
+
+  useEffect(() => {
+    try {
+      fetchProfile();
+    } catch (error) {
+      alert('Error fetching profile data!' + error);
+    }
+  }, []);
 
   return (
     <div className={EProfileViewStyles.CONTAINER}>

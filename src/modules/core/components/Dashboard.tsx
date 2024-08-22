@@ -8,6 +8,7 @@ import {
   Settings,
   WalletMinimal,
   ShoppingBag,
+  BadgeCheck,
 } from 'lucide-react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import HomeView from '../views_dashboard/HomeView';
@@ -17,6 +18,7 @@ import ProfileView from '../views_dashboard/ProfileView';
 import SettingsView from '../views_dashboard/SettingsView';
 import AccountManagement from './AccountManagement';
 import StorePurchase from './StorePurchase';
+import KycView from '../views_dashboard/KycView';
 
 interface IDashboardProps {
   onLogout: () => void;
@@ -47,6 +49,7 @@ function Dashboard({ onLogout }: IDashboardProps) {
     },
     { icon: <Bell />, label: 'Notifications', key: 'notifications' },
     { icon: <User />, label: 'Profile', key: 'profile' },
+    { icon: <BadgeCheck />, label: 'KYC', key: 'kyc' },
     { icon: <Settings />, label: 'Settings', key: 'settings' },
   ];
 
@@ -66,7 +69,7 @@ function Dashboard({ onLogout }: IDashboardProps) {
   return (
     <div className="flex h-screen bg-gray-100 dark:bg-gray-900 ">
       {/* Sidebar */}
-      <div className="h-screen w-16 md:w-56  bg-amber-50 dark:bg-neutral-700">
+      <div className="h-screen w-16 md:w-56  bg-amber-50 shadow-md dark:bg-neutral-700">
         <div className="p-4 flex ">
           <WalletMinimal
             size={32}
@@ -169,6 +172,7 @@ function Dashboard({ onLogout }: IDashboardProps) {
               path="profile"
               element={<ProfileView onLogout={onLogout} />}
             />
+            <Route path="kyc" element={<KycView />} />
             <Route path="settings" element={<SettingsView />} />
           </Routes>
         </main>

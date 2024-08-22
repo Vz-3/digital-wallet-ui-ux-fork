@@ -3,7 +3,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FormEvent } from 'react';
 import { ECoreStyles } from '../styles/styleIndex';
 import { loginUserAPI } from '../services/apiService';
-import { updateToken } from '../services/apiAuthService';
+import {
+  storeProfile,
+  updateToken,
+} from '../services/apiAuthService';
 // can be placed on a shared/commons folder.
 interface ILoginProp {
   onLogin: () => void;
@@ -39,7 +42,11 @@ function Login({ onLogin }: ILoginProp) {
       console.log(data.token);
 
       updateToken(data.token);
-
+      storeProfile({
+        firstName: data.user.firstName,
+        lastName: data.user.lastName,
+        email: data.user.email,
+      });
       onLogin();
 
       console.log(`Logged in as ${loginEmail} at ${Date.now()}`);
