@@ -1,3 +1,10 @@
+DigiWallet ReadME:
+
+1. git clone: https://github.com/Vz-3/digital-wallet-ui-ux-fork.git
+2. install prerequisities (React-scripts, npm, nodejs, etc.) & training-ewallet dockerfile.
+3. `npm install` and for any issues, do `npm install --legacy-peer-deps`
+4. `npm run start` or change the port of the app first then run the program.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
