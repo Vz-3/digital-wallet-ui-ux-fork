@@ -185,6 +185,17 @@ export async function getTransactionsAPI() {
   });
 }
 
+export async function generateQRCodeAPI(amount: number) {
+  return fetch(`${BASE_URL}wallet/generate-qr`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ amount: amount }),
+  });
+}
+
 export async function logout() {
   localStorage.removeItem('token');
   token = null;
